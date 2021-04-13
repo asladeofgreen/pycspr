@@ -95,7 +95,19 @@ def test_05_get_auction_info(LIB):
     _assert(LIB.get_auction_info())
 
 
-def test_06_get_node_peers(LIB):
+def test_06_get_node_metrics(LIB):
+    # Example API response.
+    # See api_reponses/rest_metrics.json
+
+    # Assert API response.
+    def _assert(response):
+        assert isinstance(response, list)
+
+    # Invoke API.
+    _assert(LIB.get_node_metrics())
+
+
+def test_07_get_node_peers(LIB):
     # Example API response.
     # See api_reponses/info_get_peers.json
 
@@ -107,7 +119,7 @@ def test_06_get_node_peers(LIB):
     _assert(LIB.get_node_peers())
 
 
-def test_07_get_node_status(LIB):
+def test_08_get_node_status(LIB):
     # Example API response.
     # See api_reponses/info_get_status.json
 
@@ -119,7 +131,7 @@ def test_07_get_node_status(LIB):
     _assert(LIB.get_node_status())
 
 
-def test_08_get_block_01(LIB):
+def test_09_get_block_01(LIB):
     # Example API response.
     # See api_reponses/chain_get_block.json
 
@@ -136,7 +148,7 @@ def test_08_get_block_01(LIB):
         _assert(LIB.get_block(block_id))
 
 
-def test_08_get_block_02(LIB, block_hash):
+def test_09_get_block_02(LIB, block_hash):
     # Example API response.
     # See api_reponses/chain_get_block.json
 

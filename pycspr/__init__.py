@@ -15,6 +15,7 @@ from pycspr.queries import get_account_main_purse_uref
 from pycspr.queries import get_auction_info
 from pycspr.queries import get_block
 from pycspr.queries import get_chain_state_root_hash
+from pycspr.queries import get_node_metrics
 from pycspr.queries import get_node_peers
 from pycspr.queries import get_node_status
 
