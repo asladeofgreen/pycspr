@@ -1,3 +1,5 @@
+import typing
+
 import jsonrpcclient as rpc_client
 
 import pycspr
@@ -12,11 +14,13 @@ _RPC_METHOD = "state_get_balance"
 def execute(
     purse_uref: str,
     state_root_hash: str = None,
-    ) -> int:
+    parse_response: bool = True,
+    ) -> typing.Union[int, dict]:
     """Queries account balance at a certain state root hash.
 
     :param purse_uref: URef of a purse associated with an on-chain account.
     :param state_root_hash: A node's root state hash at some point in chain time.
+    :param parse_response: Flag indicating whether to parse web-service response.
 
     :returns: Account balance if on-chain account is found.
 
@@ -25,10 +29,5 @@ def execute(
         purse_uref=purse_uref,
         state_root_hash=state_root_hash,
         )
-
-    # assert "api_version" in response.data.result
-    # assert "merkle_proof" in response.data.result
-    # assert "stored_value" in response.data.result
-    # assert "Account" in response.data.result["stored_value"]
-
-    return int(response.data.result["balance_value"])
+    
+    return int(response.data.result["balance_value"]) if parse_response else response.data.result

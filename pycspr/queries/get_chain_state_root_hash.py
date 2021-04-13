@@ -10,10 +10,12 @@ _RPC_METHOD = "chain_get_state_root_hash"
 
 def execute(
     block_id: str = None,
+    parse_response: bool = True,
     ) -> str:
     """Returns an on-chain state root hash at specified block.
 
     :param block_id: Identifier of a finialised block.
+    :param parse_response: Flag indicating whether to parse web-service response.
 
     :returns: State root hash at specified block.
 
@@ -22,7 +24,4 @@ def execute(
         block_identifier=block_id,
         )
 
-    assert "api_version" in response.data.result
-    assert "state_root_hash" in response.data.result
-
-    return response.data.result["state_root_hash"]
+    return response.data.result["state_root_hash"] if parse_response else response.data.result

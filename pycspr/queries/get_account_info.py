@@ -12,11 +12,13 @@ _RPC_METHOD = "state_get_item"
 def execute(
     account_key: str,
     state_root_hash=None,
+    parse_response: bool = True,
     ) -> str:
     """Queries account information at a certain state root hash.
 
     :param account_key: Key of an on-chain account.
     :param state_root_hash: A node's root state hash at some point in chain time.
+    :param parse_response: Flag indicating whether to parse web-service response.
 
     :returns: Account information in JSON format.
 
@@ -29,9 +31,4 @@ def execute(
         path=[]
         )
 
-    assert "api_version" in response.data.result
-    assert "merkle_proof" in response.data.result
-    assert "stored_value" in response.data.result
-    assert "Account" in response.data.result["stored_value"]
-
-    return response.data.result["stored_value"]["Account"]
+    return response.data.result["stored_value"]["Account"] if parse_response else response.data.result
