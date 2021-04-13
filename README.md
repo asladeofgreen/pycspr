@@ -7,7 +7,7 @@ Python library for interacting with a CSPR node.
 What is pycspr ?
 --------------------------------------
 
-pycspr stands for PYthon CaSPeR.  It's goal is to streamline client side experience of interacting with a casper node.
+pycspr stands for **PY**thon **C**a**SP**e**R**.  It's goal is to streamline client side experience of interacting with a casper node.
 
 
 Why pycspr ?
