@@ -6,7 +6,7 @@ from pycspr.crypto import get_account_hash
 
 
 # RPC method to be invoked.
-_RPC_METHOD = "state_get_item"
+_API_ENDPOINT = "state_get_item"
 
 
 def execute(
@@ -25,7 +25,7 @@ def execute(
     """
     account_hash = get_account_hash(account_key)
 
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _RPC_METHOD,
+    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT,
         key=f"account-hash-{account_hash}",
         state_root_hash=state_root_hash,
         path=[]

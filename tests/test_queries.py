@@ -95,16 +95,30 @@ def test_05_get_auction_info(LIB):
     _assert(LIB.get_auction_info())
 
 
-def test_06_get_node_metrics(LIB):
+def test_06_get_node_metrics_01(LIB):
     # Example API response.
     # See api_reponses/rest_metrics.json
 
     # Assert API response.
     def _assert(response):
         assert isinstance(response, list)
+        assert len(response) == 312
 
     # Invoke API.
     _assert(LIB.get_node_metrics())
+
+
+def test_06_get_node_metrics_02(LIB):
+    # Example API response.
+    # See api_reponses/rest_metrics.json
+
+    # Assert API response.
+    def _assert(response):
+        assert isinstance(response, list)
+        assert len(response) == 1
+
+    # Invoke API.
+    _assert(LIB.get_node_metrics("mem_deploy_gossiper"))
 
 
 def test_07_get_node_peers(LIB):

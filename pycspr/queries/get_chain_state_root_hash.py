@@ -5,7 +5,7 @@ import pycspr
 
 
 # Method upon client to be invoked.
-_RPC_METHOD = "chain_get_state_root_hash"
+_API_ENDPOINT = "chain_get_state_root_hash"
 
 
 def execute(
@@ -20,7 +20,7 @@ def execute(
     :returns: State root hash at specified block.
 
     """
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _RPC_METHOD,
+    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT,
         block_identifier=block_id,
         )
 

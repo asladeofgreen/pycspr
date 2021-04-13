@@ -8,13 +8,18 @@ import pycspr
 _API_ENDPOINT = "metrics"
 
 
-def execute() -> dict:
+def execute(
+    metric_id: str = None,
+    ) -> list:
     """Returns node peers information.
 
-    :returns: Node peers information.
+    :param metric_id: Identifier of node metric.
+
+    :returns: Node metrics information.
 
     """
     endpoint = f"{pycspr.CONNECTION.address_rest}/{_API_ENDPOINT}"
     response = rest_client.get(endpoint).content.decode("utf-8")
-    
-    return sorted([i.strip() for i in response.split("\n") if not i.startswith("#")])
+    response = sorted([i.strip() for i in response.split("\n") if not i.startswith("#")])
+
+    return response if metric_id is None else [i for i in response if i.startswith(metric_id)]

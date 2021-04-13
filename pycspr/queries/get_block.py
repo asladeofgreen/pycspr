@@ -6,7 +6,7 @@ from pycspr.crypto import get_account_hash
 
 
 # RPC method to be invoked.
-_RPC_METHOD = "chain_get_block"
+_API_ENDPOINT = "chain_get_block"
 
 
 def execute(
@@ -21,7 +21,7 @@ def execute(
     :returns: On-chain block information.
 
     """
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _RPC_METHOD,
+    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT,
         block_identifier=block_id,
         )
 

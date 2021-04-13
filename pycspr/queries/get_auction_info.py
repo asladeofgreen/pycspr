@@ -5,7 +5,7 @@ import pycspr
 
 
 # Method upon client to be invoked.
-_RPC_METHOD = "state_get_auction_info"
+_API_ENDPOINT = "state_get_auction_info"
 
 
 def execute() -> dict:
@@ -14,6 +14,6 @@ def execute() -> dict:
     :returns: Node status information.
 
     """
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _RPC_METHOD)
+    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT)
 
     return response.data.result
