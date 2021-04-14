@@ -7,7 +7,6 @@
 #  88              d8'                              88                       
 
 from pycspr import crypto
-from pycspr.connection_info import ConnectionInfo
 from pycspr.crypto  import get_account_hash
 from pycspr.queries import get_account_balance
 from pycspr.queries import get_account_info
@@ -23,6 +22,7 @@ from pycspr.queries import get_rpc_schema
 from pycspr.queries import get_state_root_hash
 from pycspr.queries import get_switch_block
 from pycspr.utils import constants
+from pycspr.utils.connection_info import ConnectionInfo
 
 
 

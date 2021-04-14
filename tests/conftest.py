@@ -5,7 +5,7 @@ import typing
 import pytest
 
 import pycspr
-from pycspr.connection_info import ConnectionInfo
+from pycspr.utils.connection_info import ConnectionInfo
 
 
 
@@ -14,7 +14,7 @@ def LIB() -> pycspr:
     """Returns pointer to configured library instance. 
     
     """
-    # Initialise with default node connection info.
+    # Initialise with default NCTL node 1 connection info.
     pycspr.initialise(ConnectionInfo())
 
     return pycspr
