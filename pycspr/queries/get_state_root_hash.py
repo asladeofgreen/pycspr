@@ -1,3 +1,5 @@
+import typing
+
 import jsonrpcclient as rpc_client
 
 import pycspr
@@ -11,7 +13,7 @@ _API_ENDPOINT = "chain_get_state_root_hash"
 def execute(
     block_id: str = None,
     parse_response: bool = True,
-    ) -> str:
+    ) -> typing.Union[dict, str]:
     """Returns an on-chain state root hash at specified block.
 
     :param block_id: Identifier of a finialised block.

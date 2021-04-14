@@ -1,5 +1,5 @@
 # Set of JSON RPC endpoints.
-API_ENDPOINTS_JSON_RPC = {
+API_ENDPOINTS_JSON_RPC: set = {
     "account_put_deploy",
     "info_get_deploy",
     "info_get_peers",

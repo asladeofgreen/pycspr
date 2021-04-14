@@ -20,16 +20,16 @@ class ConnectionInfo:
     port_sse: int = 60101
 
     @property
-    def address_rest(self):
+    def address_rest(self) -> str:
         """A node's REST server base address."""
         return f"http://{self.host}:{self.port_rest}"
 
     @property
-    def address_rpc(self):
+    def address_rpc(self) -> str:
         """A node's RPC server base address."""
         return f"http://{self.host}:{self.port_rpc}/rpc"
 
     @property
-    def address_sse(self):
+    def address_sse(self) -> str:
         """A node's SSE server base address."""
         return f"http://{self.host}:{self.port_sse}"

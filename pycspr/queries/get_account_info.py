@@ -13,7 +13,7 @@ def execute(
     account_key: str,
     state_root_hash=None,
     parse_response: bool = True,
-    ) -> str:
+    ) -> dict:
     """Queries account information at a certain state root hash.
 
     :param account_key: Key of an on-chain account.
