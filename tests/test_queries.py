@@ -18,7 +18,7 @@ def test_get_state_root_hash(LIB):
 
 def test_get_account_info(LIB, account_key, state_root_hash):
     # Example API response.
-    # See api_reponses/rpc_state_get_item.account.json
+    # See ../docs/api_reponses/rpc_state_get_item.account.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -69,7 +69,7 @@ def test_get_account_balance_01(LIB, account_main_purse_uref, state_root_hash):
 
 def test_get_account_balance_02(LIB, account_main_purse_uref, state_root_hash):
     # Example API response.
-    # See api_reponses/rpc_state_get_balance.json
+    # See ../docs/api_reponses/rpc_state_get_balance.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -79,7 +79,7 @@ def test_get_account_balance_02(LIB, account_main_purse_uref, state_root_hash):
 
 def test_get_auction_info(LIB):
     # Example API response.
-    # See api_reponses/rpc_state_get_auction_info.json
+    # See ../docs/api_reponses/rpc_state_get_auction_info.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -89,7 +89,7 @@ def test_get_auction_info(LIB):
 
 def test_get_node_metrics_01(LIB):
     # Example API response.
-    # See api_reponses/rpc_metrics.json
+    # See ../docs/api_reponses/rpc_metrics.json
 
     def _assert(response):
         assert isinstance(response, list)
@@ -100,7 +100,7 @@ def test_get_node_metrics_01(LIB):
 
 def test_get_node_metrics_02(LIB):
     # Example API response.
-    # See api_reponses/rest_metrics.json
+    # See ../docs/api_reponses/rest_metrics.json
 
     def _assert(response):
         assert isinstance(response, list)
@@ -111,7 +111,7 @@ def test_get_node_metrics_02(LIB):
 
 def test_get_node_peers(LIB):
     # Example API response.
-    # See api_reponses/rpc_info_get_peers.json
+    # See ../docs/api_reponses/rpc_info_get_peers.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -121,7 +121,7 @@ def test_get_node_peers(LIB):
 
 def test_get_node_status(LIB):
     # Example API response.
-    # See api_reponses/rpc_info_get_status.json
+    # See ../docs/api_reponses/rpc_info_get_status.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -131,7 +131,7 @@ def test_get_node_status(LIB):
 
 def test_get_block_01(LIB):
     # Example API response.
-    # See api_reponses/rpc_chain_get_block.json
+    # See ../docs/api_reponses/rpc_chain_get_block.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -146,7 +146,7 @@ def test_get_block_01(LIB):
 
 def test_get_block_02(LIB, block_hash):
     # Example API response.
-    # See api_reponses/rpc_chain_get_block.json
+    # See ../docs/api_reponses/rpc_chain_get_block.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -160,7 +160,7 @@ def test_get_block_02(LIB, block_hash):
 
 def test_get_switch_block(LIB):
     # Example API response.
-    # See api_reponses/rpc_chain_get_block.json
+    # See ../docs/api_reponses/rpc_chain_get_block.json
 
     def _assert(response):
         assert response["header"]["era_end"] is not None
@@ -170,7 +170,7 @@ def test_get_switch_block(LIB):
 
 def test_get_era_info_01(LIB, switch_block_hash):
     # Example API response.
-    # See api_reponses/rpc_chain_get_era_info_by_switch_block.json
+    # See ../docs/api_reponses/rpc_chain_get_era_info_by_switch_block.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -187,7 +187,7 @@ def test_get_era_info_01(LIB, switch_block_hash):
 
 def test_get_rpc_schema(LIB):
     # Example API response.
-    # See api_reponses/rpc_discover.json
+    # See ../docs/api_reponses/rpc_discover.json
 
     def _assert(response):
         assert isinstance(response, dict)
@@ -198,7 +198,7 @@ def test_get_rpc_schema(LIB):
 
 def test_get_rpc_endpoint_01(LIB):
     # Example API response.
-    # See api_reponses/rpc_discover.json
+    # See ../docs/api_reponses/rpc_discover.json
 
     def _assert(response):
         assert isinstance(response, list)
@@ -209,7 +209,7 @@ def test_get_rpc_endpoint_01(LIB):
 
 def test_get_rpc_endpoint_02(LIB):
     # Example API response.
-    # See api_reponses/rpc_discover.json
+    # See ../docs/api_reponses/rpc_discover.json
 
     def _assert(response):
         assert isinstance(response, dict)
