@@ -16,3 +16,10 @@ def test_get_account_hash(LIB, account_keys):
 def test_get_account_hash_from_public_key(LIB, account_keys):
     for key_type, public_key, account_hash in account_keys:
         assert LIB.crypto.get_account_hash_from_public_key(key_type, public_key) == account_hash
+
+
+def test_get_hash(LIB, hash_data):
+    data, fixtures = hash_data
+    for algo, encoding, digest_expected in fixtures:
+        digest = LIB.crypto.get_hash(data, 32, algo, encoding)
+        assert digest == digest_expected

@@ -21,6 +21,25 @@ def LIB() -> pycspr:
 
 
 @pytest.fixture(scope="session")
+def hash_data(LIB) -> typing.Tuple[bytes, typing.Tuple]:
+    """Returns set of test accoutn key. 
+    
+    """    
+    return b"al-kindi", (
+        (
+            LIB.crypto.HashAlgorithm.BLAKE2B, \
+            LIB.crypto.HashEncoding.BYTES, \
+            b"H\x1d{\x97\xb0\xb1!\xb0\xaf\xcf\x89\x1a\xa2#]\x0f\xf2\xf5\xf8r\xe9\xeb\xe0\xa7\xb6z\xf5\x86\xcd\x1cyR",
+        ),
+        (
+            LIB.crypto.HashAlgorithm.BLAKE2B, \
+            LIB.crypto.HashEncoding.HEX, \
+            "481d7b97b0b121b0afcf891aa2235d0ff2f5f872e9ebe0a7b67af586cd1c7952"
+        ),
+    )
+
+
+@pytest.fixture(scope="session")
 def account_keys(LIB) -> typing.Tuple[pycspr.crypto.KeyAlgorithm, str, str]:
     """Returns set of test accoutn key. 
     
