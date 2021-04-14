@@ -23,4 +23,9 @@ def get_account_key(key_algo: KeyAlgorithm, public_key: str) -> str:
     except KeyError:
         raise KeyError(f"Unsupported key type: {key_algo}")
 
+    if key_algo == KeyAlgorithm.ED25519 and len(public_key) != 64:
+        raise ValueError(f"ED25519 public key (hex) should be 64 characters in length.")
+    elif key_algo == KeyAlgorithm.SECP256K1 and len(public_key) != 66:
+        raise ValueError(f"SECP256K1 public key (hex) should be 66 characters in length.")
+
     return f"{_KEY_ALGO_PREFIX[key_algo]}{public_key}"

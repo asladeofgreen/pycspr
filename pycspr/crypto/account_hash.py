@@ -35,6 +35,4 @@ def get_account_hash_from_public_key(key_algo: KeyAlgorithm, public_key: str) ->
         bytearray(1) + \
         bytes.fromhex(public_key)
 
-    print(len(as_bytes))
-
     return get_hash(as_bytes, 32, HashAlgorithm.BLAKE2B, HashEncoding.HEX)
