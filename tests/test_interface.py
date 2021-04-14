@@ -25,11 +25,13 @@ _FUNCS = {
     "get_account_main_purse_uref",
     "get_auction_info",
     "get_block",
-    "get_chain_state_root_hash",
     "get_era_info",
     "get_node_metrics",
     "get_node_peers",
     "get_node_status",
+    "get_rpc_endpoint",
+    "get_rpc_schema",
+    "get_state_root_hash",
     "get_switch_block",
 }
 

@@ -4,7 +4,7 @@ import pytest
 
 
 
-def test_get_chain_state_root_hash(LIB):
+def test_get_state_root_hash(LIB):
     # Example API response.
     # 601d694f2e5815430268fa5269f9325abd380620f2fd1abdc430bc8dd0503985
 
@@ -13,7 +13,7 @@ def test_get_chain_state_root_hash(LIB):
         assert len(response) == 64
 
     for block_id in (None, 1):
-        _assert(LIB.get_chain_state_root_hash(block_id))
+        _assert(LIB.get_state_root_hash(block_id))
 
 
 def test_get_account_info(LIB, account_key, state_root_hash):
@@ -183,3 +183,36 @@ def test_get_era_info_01(LIB, switch_block_hash):
         assert "seigniorage_allocations" in response["stored_value"]["EraInfo"]
 
     _assert(LIB.get_era_info(switch_block_hash))
+
+
+def test_get_rpc_schema(LIB):
+    # Example API response.
+    # See api_reponses/rpc_discover.json
+
+    def _assert(response):
+        assert isinstance(response, dict)
+        assert "openrpc" in response
+
+    _assert(LIB.get_rpc_schema())
+
+
+def test_get_rpc_endpoint_01(LIB):
+    # Example API response.
+    # See api_reponses/rpc_discover.json
+
+    def _assert(response):
+        assert isinstance(response, list)
+        assert response == sorted(LIB.constants.API_ENDPOINTS_JSON_RPC)
+
+    _assert(LIB.get_rpc_endpoint())
+
+
+def test_get_rpc_endpoint_02(LIB):
+    # Example API response.
+    # See api_reponses/rpc_discover.json
+
+    def _assert(response):
+        assert isinstance(response, dict)
+
+    for endpoint in LIB.constants.API_ENDPOINTS_JSON_RPC:
+        _assert(LIB.get_rpc_endpoint(endpoint))

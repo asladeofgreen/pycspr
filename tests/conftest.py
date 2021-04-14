@@ -64,7 +64,7 @@ def state_root_hash(LIB) -> str:
     """Returns current state root hash @ NCTL Node 1. 
     
     """
-    return LIB.get_chain_state_root_hash()
+    return LIB.get_state_root_hash()
 
 
 @pytest.fixture(scope="function")
