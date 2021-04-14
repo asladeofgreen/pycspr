@@ -51,7 +51,7 @@ _VERSION = _get_version()
 _PACKAGES = find_packages()
 
 # User readme.
-_README = _read('README.rst')
+_README = _read('README.md')
 
 
 
