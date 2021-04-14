@@ -11,15 +11,19 @@ ALGOS = {
     HashAlgorithm.BLAKE2B: blake2b,
 }
 
+# Map: Hash encoding <-> encoder.
 ENCODERS = {
     HashEncoding.BYTES: lambda x: x,
     HashEncoding.HEX: lambda x: x.hex(),
 }
 
+# Default length of a hash digest.
+_DIGEST_LENGTH = 32
+
 
 def get_hash(
     data: bytes,
-    size: int = 32,
+    size: int = _DIGEST_LENGTH,
     algo: HashAlgorithm = HashAlgorithm.BLAKE2B,
     encoding: HashEncoding = HashEncoding.BYTES,
     ) -> typing.Union[bytes, str]:
