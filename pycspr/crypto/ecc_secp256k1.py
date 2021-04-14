@@ -31,7 +31,10 @@ def get_key_pair_from_pvk_b64(pvk_b64: str):
     :returns : 2 member tuple: (private key, public key)
     
     """
-    return _get_key_pair_from_sk(ecdsa.SigningKey.from_string(base64.b64decode(pvk_b64)))
+    pvk = base64.b64decode(pvk_b64)
+    sk = ecdsa.SigningKey.from_string(pvk, curve=CURVE)
+
+    return _get_key_pair_from_sk(sk)
 
 
 def get_key_pair_from_pvk_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
@@ -42,17 +45,32 @@ def get_key_pair_from_pvk_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     :returns : 2 member tuple: (private key, public key)
     
     """
-    as_pem = _get_bytes_from_pem_file(fpath)
-    as_pem = as_pem.decode("UTF-8")
+    pvk = _get_bytes_from_pem_file(fpath).decode("UTF-8")
+    sk = ecdsa.SigningKey.from_pem(pvk)
 
-    return _get_key_pair_from_sk(ecdsa.SigningKey.from_pem(as_pem))
+    return _get_key_pair_from_sk(sk)
+
+
+def get_key_pair_from_seed(seed: bytes) -> typing.Tuple[bytes, bytes]:
+    """Returns an ED25519 key pair derived from a seed.
+
+    :param seed: A seed used as input to deterministic key pair generation.
+
+    :returns : 2 member tuple: (private key, public key)
+    
+    """
+    sk = ecdsa.SigningKey.from_string(seed, curve=CURVE)
+
+    return _get_key_pair_from_sk(sk)
 
 
 def get_pvk_pem_from_bytes(pvk: bytes) -> bytes:
     """Returns SECP256K1 private key (pem) from bytes.
     
     """
-    return ecdsa.SigningKey.from_string(pvk, curve=CURVE).to_pem()
+    sk = ecdsa.SigningKey.from_string(pvk, curve=CURVE)
+
+    return sk.to_pem()
 
 
 def _get_bytes_from_pem_file(fpath: str) -> bytes:

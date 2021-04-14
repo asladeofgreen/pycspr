@@ -17,7 +17,9 @@ def get_key_pair() -> typing.Tuple[bytes, bytes]:
     :returns : 2 member tuple: (private key, public key)
     
     """
-    return _get_key_pair_from_sk(ed25519.Ed25519PrivateKey.generate())
+    sk = ed25519.Ed25519PrivateKey.generate()
+
+    return _get_key_pair_from_sk(sk)
 
 
 def get_key_pair_from_pvk_b64(pvk_b64: str) -> typing.Tuple[bytes, bytes]:
@@ -28,11 +30,10 @@ def get_key_pair_from_pvk_b64(pvk_b64: str) -> typing.Tuple[bytes, bytes]:
     :returns : 2 member tuple: (private key, public key)
     
     """
-    return _get_key_pair_from_sk(
-        ed25519.Ed25519PrivateKey.from_private_bytes(
-            base64.b64decode(pvk_b64)
-            )
-        )
+    pvk = base64.b64decode(pvk_b64)
+    sk = ed25519.Ed25519PrivateKey.from_private_bytes(pvk)
+
+    return _get_key_pair_from_sk(sk)
 
 
 def get_key_pair_from_pvk_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
@@ -43,11 +44,10 @@ def get_key_pair_from_pvk_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     :returns : 2 member tuple: (private key, public key)
     
     """
-    return _get_key_pair_from_sk(
-        ed25519.Ed25519PrivateKey.from_private_bytes(
-            _get_bytes_from_pem_file(fpath)
-            )
-        )
+    pvk = _get_bytes_from_pem_file(fpath)
+    sk = ed25519.Ed25519PrivateKey.from_private_bytes(pvk)
+
+    return _get_key_pair_from_sk(sk)
 
 
 def get_key_pair_from_seed(seed: bytes) -> typing.Tuple[bytes, bytes]:
