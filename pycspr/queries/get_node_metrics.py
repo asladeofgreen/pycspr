@@ -22,4 +22,4 @@ def execute(
     response = rest_client.get(endpoint).content.decode("utf-8")
     response = sorted([i.strip() for i in response.split("\n") if not i.startswith("#")])
 
-    return response if metric_id is None else [i for i in response if i.startswith(metric_id)]
+    return response if metric_id is None else [i for i in response if i.lower().startswith(metric_id.lower())]
