@@ -26,9 +26,11 @@ _FUNCS = {
     "get_auction_info",
     "get_block",
     "get_chain_state_root_hash",
+    "get_era_info",
     "get_node_metrics",
     "get_node_peers",
     "get_node_status",
+    "get_switch_block",
 }
 
 

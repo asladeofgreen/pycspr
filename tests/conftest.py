@@ -73,3 +73,19 @@ def block_hash(LIB) -> str:
     
     """
     return LIB.get_block()["hash"]
+
+
+@pytest.fixture(scope="session")
+def switch_block(LIB) -> str:
+    """Returns hash of most next switch. 
+    
+    """
+    return LIB.get_switch_block()
+
+
+@pytest.fixture(scope="session")
+def switch_block_hash(switch_block) -> str:
+    """Returns hash of most next switch. 
+    
+    """
+    return switch_block["hash"]
