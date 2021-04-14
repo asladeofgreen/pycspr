@@ -30,7 +30,7 @@ from pycspr.utils.connection_info import ConnectionInfo
 # Lib metadata.
 __title__ = "pycspr"
 __version__ = "0.1.0"
-__author__ = "osbitwhoei - object swarms bath in the white heat of event infernoes"
+__author__ = "Mark A. Greenslade"
 __license__ = "Apache 2.0"
 
 # Node connection info.
