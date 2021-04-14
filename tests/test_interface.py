@@ -37,7 +37,7 @@ _FUNCS = {
 }
 
 
-def yield_parameterizations():
+def _yield_parameterizations():
     """Yields test parameterizations.
 
     """    
@@ -46,21 +46,21 @@ def yield_parameterizations():
         (_CONSTANTS, 'constant'),
         (_EXCEPTIONS, 'exception'),
         (_FUNCS, 'function'),
-            ):
+        ):
         for member in sorted(members):
             yield member_type, member
 
 
 def test_library_version(LIB):
-    """Test current version.
+    """Asserts library version.
 
     """
     assert LIB.__version__ == "0.1.0"
 
 
-@pytest.mark.parametrize("member_type, member", yield_parameterizations())
+@pytest.mark.parametrize("member_type, member", _yield_parameterizations())
 def test_library_exports(LIB, member_type, member):
-    """Test set of exports exposed by library.
+    """Asserts that library is exposing expected interface.
 
     """
     assertor = getattr(tu, 'assert_has_{}'.format(member_type))
