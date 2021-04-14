@@ -8,6 +8,7 @@
 
 from pycspr import crypto
 from pycspr.crypto  import get_account_hash
+from pycspr.crypto  import get_account_key
 from pycspr.queries import get_account_balance
 from pycspr.queries import get_account_info
 from pycspr.queries import get_account_main_purse_uref

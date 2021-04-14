@@ -22,6 +22,7 @@ _FUNCS = {
     "get_account_balance",
     "get_account_hash",
     "get_account_info",
+    "get_account_key",
     "get_account_main_purse_uref",
     "get_auction_info",
     "get_block",
