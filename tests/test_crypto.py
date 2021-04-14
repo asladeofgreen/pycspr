@@ -11,3 +11,8 @@ def test_get_account_hash(LIB, account_keys):
         account_key = LIB.crypto.get_account_key(key_type, public_key)
         assert LIB.crypto.get_key_algo(account_key) == key_type
         assert LIB.crypto.get_account_hash(account_key) == account_hash
+
+
+def test_get_account_hash_from_public_key(LIB, account_keys):
+    for key_type, public_key, account_hash in account_keys:
+        assert LIB.crypto.get_account_hash_from_public_key(key_type, public_key) == account_hash
