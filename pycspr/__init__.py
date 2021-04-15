@@ -11,7 +11,9 @@ from pycspr.crypto  import get_account_hash
 from pycspr.crypto  import get_account_key
 from pycspr.node    import NodeConnectionInfo
 from pycspr.node    import NodeEventType
-from pycspr.node    import NODE_JSON_RPC_ENDPOINTS
+from pycspr.node    import NODE_REST_ENDPOINTS
+from pycspr.node    import NODE_RPC_ENDPOINTS
+from pycspr.node    import NODE_SSE_ENDPOINTS
 from pycspr.queries import get_account_balance
 from pycspr.queries import get_account_info
 from pycspr.queries import get_account_main_purse_uref

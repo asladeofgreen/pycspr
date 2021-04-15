@@ -48,8 +48,14 @@ class NodeEventType(enum.Enum):
     DEPLOY_PROCESSED = enum.auto()
 
 
-# Set of JSON RPC endpoints.
-NODE_JSON_RPC_ENDPOINTS: set = {
+# Set of REST endpoints.
+NODE_REST_ENDPOINTS: set = {
+    "metrics",
+    "status",
+}
+
+# Set of RPC endpoints.
+NODE_RPC_ENDPOINTS: set = {
     "account_put_deploy",
     "info_get_deploy",
     "info_get_peers",
@@ -61,4 +67,9 @@ NODE_JSON_RPC_ENDPOINTS: set = {
     "state_get_balance",
     "chain_get_era_info_by_switch_block",
     "state_get_auction_info",
+}
+
+# Set of SSE endpoints.
+NODE_SSE_ENDPOINTS: set = {
+    "events",
 }

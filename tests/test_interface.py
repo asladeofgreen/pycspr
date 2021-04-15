@@ -63,7 +63,9 @@ _INTERFACE = {
     },
     _has_constant: {
         "CONNECTION",
-        "NODE_JSON_RPC_ENDPOINTS",
+        "NODE_REST_ENDPOINTS",
+        "NODE_RPC_ENDPOINTS",
+        "NODE_SSE_ENDPOINTS",
     },
     _has_exception: set(),
     _has_function: {
