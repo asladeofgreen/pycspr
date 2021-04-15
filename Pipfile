@@ -11,7 +11,6 @@ tox = "*"
 cryptography = "*"
 ecdsa = "*"
 jsonrpcclient = "*"
-pyblake2 = "*"
 requests = "*"
 sseclient-py = "*"
 
