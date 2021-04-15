@@ -6,7 +6,8 @@ import tests.utils as tu
 
 # Set of classes exposed by library.
 _CLASSES = {
-    "ConnectionInfo",
+    "NodeConnectionInfo",
+    "NodeEventType",
     }
 
 # Set of constants exposed by library.
@@ -27,6 +28,7 @@ _FUNCS = {
     "get_auction_info",
     "get_block",
     "get_era_info",
+    "get_events",
     "get_node_metrics",
     "get_node_peers",
     "get_node_status",

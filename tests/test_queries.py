@@ -168,7 +168,7 @@ def test_get_rpc_endpoint_01(LIB):
     def _assert(response):
         # e.g. docs/api_reponses/rpc_discover.json
         assert isinstance(response, list)
-        assert response == sorted(LIB.constants.API_ENDPOINTS_JSON_RPC)
+        assert response == sorted(LIB.NODE_JSON_RPC_ENDPOINTS)
 
     _assert(LIB.get_rpc_endpoint())
 
@@ -178,5 +178,5 @@ def test_get_rpc_endpoint_02(LIB):
         # e.g. docs/api_reponses/rpc_discover.json
         assert isinstance(response, dict)        
 
-    for endpoint in LIB.constants.API_ENDPOINTS_JSON_RPC:
+    for endpoint in LIB.NODE_JSON_RPC_ENDPOINTS:
         _assert(LIB.get_rpc_endpoint(endpoint))

@@ -13,7 +13,7 @@ ecdsa = "*"
 jsonrpcclient = "*"
 pyblake2 = "*"
 requests = "*"
-sseclient = "*"
+sseclient-py = "*"
 
 [requires]
 python_version = "3.9"

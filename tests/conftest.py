@@ -5,7 +5,6 @@ import typing
 import pytest
 
 import pycspr
-from pycspr.utils.connection_info import ConnectionInfo
 
 
 
@@ -15,7 +14,7 @@ def LIB() -> pycspr:
     
     """
     # Initialise with default NCTL node 1 connection info.
-    pycspr.initialise(ConnectionInfo())
+    pycspr.initialise(pycspr.NodeConnectionInfo())
 
     return pycspr
 
