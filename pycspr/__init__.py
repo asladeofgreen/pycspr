@@ -6,7 +6,7 @@
 #  88               d8'                             88                       
 #  88              d8'                              88                       
 
-from pycspr import crypto
+from pycspr         import crypto
 from pycspr.crypto  import get_account_hash
 from pycspr.crypto  import get_account_key
 from pycspr.node    import NodeConnectionInfo
@@ -42,12 +42,14 @@ CONNECTION = None
 
 
 def initialise(connection_info: NodeConnectionInfo):
-    """Library initialiser - to be inokved prior to usage.
+    """Library initialiser - to be invoked prior to usage.
     
-    :param connection_info: Information requireed to connect to a node.
+    :param connection_info: Information required to connect to a node.
     
     """
     global CONNECTION
+
+    assert isinstance(connection_info, NodeConnectionInfo)
 
     if CONNECTION is None:
         CONNECTION = connection_info
