@@ -10,33 +10,33 @@ _KEY_ALGO_PREFIX = {
 
 
 def get_account_key(key_algo: KeyAlgorithm, public_key: str) -> str:
-    """Returns an on-chain account identifier.
+    """Returns an on-chain account key.
 
-    :param key_algo: Algorithm used to generate public key.
-    :param public_key: Hexadecimal representation of an ECC verifying key.
+    :param key_algo: Algorithm used to generate ECC public key.
+    :param public_key: Hexadecimal representation of an ECC public (aka verifying) key.
 
-    :returns: An on-chain account identifier.
+    :returns: An on-chain account key.
 
     """ 
-    try:
-        _KEY_ALGO_PREFIX[key_algo]
-    except KeyError:
-        raise KeyError(f"Unsupported key type: {key_algo}")
+    assert key_algo in _KEY_ALGO_PREFIX, \
+           f"Unsupported key type: {key_algo}"
 
-    if key_algo == KeyAlgorithm.ED25519 and len(public_key) != 64:
-        raise ValueError(f"ED25519 public key (hex) should be 64 characters in length.")
-    elif key_algo == KeyAlgorithm.SECP256K1 and len(public_key) != 66:
-        raise ValueError(f"SECP256K1 public key (hex) should be 66 characters in length.")
+    if key_algo == KeyAlgorithm.ED25519:
+        assert len(public_key) == 64, \
+               "ED25519 public keys (hex format) should be 64 characters in length."
+    if key_algo == KeyAlgorithm.SECP256K1:
+        assert len(public_key) == 66, \
+               "SECP256K1 public keys (hex format) should be 66 characters in length."
 
     return f"{_KEY_ALGO_PREFIX[key_algo]}{public_key}"
 
 
 def get_account_key_algo(account_key: str) -> KeyAlgorithm:
-    """Returns algorithm of an account key.
+    """Returns ECC algorithm associated with an account key.
 
-    :param account_key: An account key from which an algorithm can be derived.
+    :param account_key: An account key from which associated ECC algorithm can be derived.
 
-    :returns: A supported key algorithm.
+    :returns: An ECC key algorithm.
 
     """
     if account_key.startswith("01"):
@@ -44,4 +44,4 @@ def get_account_key_algo(account_key: str) -> KeyAlgorithm:
     if account_key.startswith("02"):
         return KeyAlgorithm.SECP256K1
 
-    raise ValueError("Unsupported account key type.")
+    raise ValueError("Unsupported account key.")
