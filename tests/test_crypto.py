@@ -4,6 +4,16 @@ import secrets
 
 
 
+def test_get_hash(LIB, hash_data):
+    """Asserts that data can be hashed.
+    
+    """
+    data, fixtures = hash_data
+    for algo, encoding, digest_expected in fixtures:
+        digest = LIB.crypto.get_hash(data, 32, algo, encoding)
+        assert digest == digest_expected
+
+
 def test_get_account_key(LIB, account_keys):
     """Asserts that account keys can be mapped from an ECC public key.
     
@@ -23,34 +33,16 @@ def test_get_account_hash(LIB, account_keys):
         assert LIB.crypto.get_account_hash(account_key) == account_hash
 
 
-def test_get_account_hash_from_public_key(LIB, account_keys):
-    """Asserts that account hashes can be mapped from an ECC public key.
-    
-    """
-    for key_algo, public_key, account_hash in account_keys:
-        assert LIB.crypto.get_account_hash_from_public_key(key_algo, public_key) == account_hash
-
-
-def test_get_hash(LIB, hash_data):
-    """Asserts that data can be hashed.
-    
-    """
-    data, fixtures = hash_data
-    for algo, encoding, digest_expected in fixtures:
-        digest = LIB.crypto.get_hash(data, 32, algo, encoding)
-        assert digest == digest_expected
-
-
-def test_get_key_algo(LIB, account_keys):
+def test_get_account_key_algo(LIB, account_keys):
     """Asserts that ECC key algo can be derived from an account key.
     
     """
     for key_algo, public_key, _ in account_keys:
         account_key = LIB.crypto.get_account_key(key_algo, public_key)
-        assert LIB.crypto.get_key_algo(account_key) == key_algo
+        assert LIB.crypto.get_account_key_algo(account_key) == key_algo
 
 
-def test_get_key_pairs_01(LIB, key_pair_specs):
+def test_get_key_pair_01(LIB, key_pair_specs):
     """Asserts that generated key pairs are encoded correctly.
     
     """

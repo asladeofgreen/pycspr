@@ -29,3 +29,19 @@ def get_account_key(key_algo: KeyAlgorithm, public_key: str) -> str:
         raise ValueError(f"SECP256K1 public key (hex) should be 66 characters in length.")
 
     return f"{_KEY_ALGO_PREFIX[key_algo]}{public_key}"
+
+
+def get_account_key_algo(account_key: str) -> KeyAlgorithm:
+    """Returns algorithm of an account key.
+
+    :param account_key: An account key from which an algorithm can be derived.
+
+    :returns: A supported key algorithm.
+
+    """
+    if account_key.startswith("01"):
+        return KeyAlgorithm.ED25519
+    if account_key.startswith("02"):
+        return KeyAlgorithm.SECP256K1
+
+    raise ValueError("Unsupported account key type.")

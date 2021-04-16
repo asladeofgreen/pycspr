@@ -140,7 +140,7 @@ def test_get_switch_block(LIB):
     _assert(LIB.get_switch_block())
 
 
-def test_get_era_info_01(LIB, switch_block_hash):
+def test_get_era_info(LIB, switch_block_hash):
     def _assert(response):
         # e.g. docs/api_reponses/rpc_chain_get_era_info_by_switch_block.json
         assert isinstance(response, dict)

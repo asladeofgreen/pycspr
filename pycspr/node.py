@@ -5,7 +5,7 @@ import enum
 
 @dataclasses.dataclass
 class NodeConnectionInfo:
-    """Encpasulates information required to connect to a node.
+    """Encapsulates information required to connect to a node.
     
     """
     # Host address.
