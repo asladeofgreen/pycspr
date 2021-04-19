@@ -59,6 +59,8 @@ _INTERFACE = {
         "NodeConnectionInfo",
     },
     _has_enum: {
+        "CLEncoding",
+        "CLType",
         "NodeEventType",
     },
     _has_constant: {
@@ -69,6 +71,8 @@ _INTERFACE = {
     },
     _has_exception: set(),
     _has_function: {
+        "decode",
+        "encode",
         "get_account_balance",
         "get_account_hash",
         "get_account_info",
