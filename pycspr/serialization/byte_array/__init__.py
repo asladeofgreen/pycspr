@@ -8,6 +8,7 @@ from pycspr.serialization.byte_array import cl_u64
 from pycspr.serialization.byte_array import cl_u128
 from pycspr.serialization.byte_array import cl_u256
 from pycspr.serialization.byte_array import cl_u512
+from pycspr.serialization.byte_array import cl_unit
 from pycspr.serialization.utils import ByteArray
 from pycspr.serialization.utils import CLType
 from pycspr.serialization.utils import DecoderError
@@ -26,6 +27,7 @@ CODECS = {
     CLType.U128: cl_u128,
     CLType.U256: cl_u256,
     CLType.U512: cl_u512,
+    CLType.UNIT: cl_unit,
 }
 
 

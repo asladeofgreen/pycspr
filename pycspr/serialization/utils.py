@@ -36,7 +36,7 @@ class CLType(enum.Enum):
     # --------------------------------
     # String + variants.
     # --------------------------------
-    # UNIT = 9
+    UNIT = 9
     STRING = 10
     # KEY = 11
     # UREF = 12

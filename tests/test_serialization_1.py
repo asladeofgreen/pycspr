@@ -50,6 +50,7 @@ def test_string(LIB):
 
     _assert_round_trip(LIB, LIB.CLType.STRING, values)
 
+
 def test_u8(LIB):
     """Asserts domain type instance: u8.
     
@@ -102,3 +103,12 @@ def test_u512(LIB):
     values = (0, (2 ** 512) - 1)
 
     _assert_round_trip(LIB, LIB.CLType.U512, values)
+
+
+def test_unit(LIB):
+    """Asserts domain type instance: unit.
+    
+    """
+    values = (None, )
+
+    _assert_round_trip(LIB, LIB.CLType.UNIT, values)
