@@ -4,8 +4,8 @@ def _assert_round_trip(LIB, typeof, values):
     """
     for encoding in LIB.CLEncoding:
         for value in values:
-            encoded = LIB.encode(value, typeof, encoding)
-            decoded = LIB.decode(encoded, typeof, encoding)
+            encoded = LIB.encode(typeof, value, encoding)
+            decoded = LIB.decode(typeof, encoded, encoding)
             assert value == decoded
 
 

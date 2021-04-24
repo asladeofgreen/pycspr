@@ -7,8 +7,10 @@ from pycspr.serialization.byte_array import cl_u64
 from pycspr.serialization.byte_array import cl_u128
 from pycspr.serialization.byte_array import cl_u256
 from pycspr.serialization.byte_array import cl_u512
+from pycspr.serialization.utils import ByteArray
 from pycspr.serialization.utils import CLType
-
+from pycspr.serialization.utils import DecoderError
+from pycspr.serialization.utils import EncoderError
 
 
 # Map: CL type <-> codec.
@@ -23,3 +25,33 @@ CODECS = {
     CLType.U256: cl_u256,
     CLType.U512: cl_u512,
 }
+
+
+def decode(typeof: CLType, data: ByteArray) -> object:
+    """Returns domain type instance decoded from a previously encoded instance.
+
+    :param typeof: Domain type to which data can be mapped, e.g. BOOL.
+    :param data: Domain data appropriately encoded.
+
+    :returns: Domain type instance.
+
+    """
+    if typeof not in CODECS:
+        raise DecoderError(encoding, "decoder unsupported")    
+
+    return CODECS[typeof].decode(data)
+
+
+def encode(typeof: CLType, value: object) -> ByteArray:
+    """Returns an instance of a domain type encoded as a byte array.
+
+    :param typeof: Domain type to which data can be mapped, e.g. BOOL.
+    :param value: Domain type instance to be encoded.
+
+    :returns: Domain instance appropriately encoded.
+
+    """
+    if typeof not in CODECS:
+        raise EncoderError(typeof, "type encoder unsupported")    
+
+    return CODECS[typeof].encode(value)
