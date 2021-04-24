@@ -1,6 +1,7 @@
 from pycspr.serialization.byte_array import cl_bool
 from pycspr.serialization.byte_array import cl_i32
 from pycspr.serialization.byte_array import cl_i64
+from pycspr.serialization.byte_array import cl_string
 from pycspr.serialization.byte_array import cl_u8
 from pycspr.serialization.byte_array import cl_u32
 from pycspr.serialization.byte_array import cl_u64
@@ -18,6 +19,7 @@ CODECS = {
     CLType.BOOL: cl_bool,
     CLType.I32: cl_i32,
     CLType.I64: cl_i64,    
+    CLType.STRING: cl_string,
     CLType.U8: cl_u8,
     CLType.U32: cl_u32,
     CLType.U64: cl_u64,

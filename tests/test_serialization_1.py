@@ -42,6 +42,14 @@ def test_i64(LIB):
     _assert_round_trip(LIB, LIB.CLType.I64, values)
 
 
+def test_string(LIB):
+    """Asserts domain type instance: string.
+    
+    """
+    values = ("test_测试", "")
+
+    _assert_round_trip(LIB, LIB.CLType.STRING, values)
+
 def test_u8(LIB):
     """Asserts domain type instance: u8.
     
