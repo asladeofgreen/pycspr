@@ -22,10 +22,7 @@ CODECS = {
 }
 
 
-def decode(
-    data: typing.Union[ByteArray, ByteStream, HexString],
-    encoding: CLEncoding,
-    ) -> object:
+def decode(data: typing.Union[ByteArray, ByteStream, HexString], encoding: CLEncoding) -> object:
     """Returns domain type instance decoded from a previously encoded instance.
 
     :param data: Domain data appropriately encoded.
@@ -42,11 +39,7 @@ def decode(
     return codec.decode(data)
 
 
-def encode(
-    typeof: CLType,
-    value: object,
-    encoding: CLEncoding,
-    ) -> typing.Union[ByteArray, ByteStream, HexString]:
+def encode(typeof: CLType, value: object, encoding: CLEncoding) -> typing.Union[ByteArray, ByteStream, HexString]:
     """Returns an instance of a domain type encoded as a byte array.
 
     :param typeof: Domain type to which data can be mapped, e.g. BOOL.

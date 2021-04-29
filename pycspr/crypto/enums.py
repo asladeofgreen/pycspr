@@ -19,6 +19,14 @@ class KeyEncoding(enum.Enum):
     PEM = enum.auto()
 
 
+class SignatureEncoding(enum.Enum):
+    """Enumeration over set of supported signature encodings.
+    
+    """
+    BYTES = enum.auto()
+    HEX = enum.auto()
+
+
 class HashAlgorithm(enum.Enum):
     """Enumeration over set of supported hash algorithms.
     

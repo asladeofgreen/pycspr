@@ -1,14 +1,3 @@
-def _assert_round_trip(LIB, typeof, values):
-    """Performs round trip serialisation assertion.
-    
-    """
-    for encoding in LIB.CLEncoding:
-        for value in values:
-            encoded = LIB.encode(typeof, value, encoding)
-            decoded = LIB.decode(typeof, encoded, encoding)
-            assert value == decoded
-
-
 def test_bool(LIB):
     values = (False, True, 0, 1)
 
@@ -20,12 +9,6 @@ def test_i32(LIB):
 
     _assert_round_trip(LIB, LIB.CLType.I32, values)
 
-#     (
-#         (-100000, [96, 121, 254, 255]),
-#         (100000, [160, 134, 1, 0]),
-#         (0, [0, 0, 0, 0]),
-#         (-1, [255, 255, 255, 255]),
-#     )
 
 def test_i64(LIB):
     values = (-(2 ** 63), 0, (2 ** 63) - 1)
@@ -37,12 +20,6 @@ def test_string(LIB):
     values = ("test_测试", "")
 
     _assert_round_trip(LIB, LIB.CLType.STRING, values)
-
-
-def test_type(LIB):
-    values = (i for i in LIB.CLType if not i == LIB.CLType.TYPE)
-
-    _assert_round_trip(LIB, LIB.CLType.TYPE, values)
 
 
 def test_u8(LIB):
@@ -85,3 +62,14 @@ def test_unit(LIB):
     values = (None, )
 
     _assert_round_trip(LIB, LIB.CLType.UNIT, values)
+
+
+def _assert_round_trip(LIB, typeof, values):
+    """Performs round trip serialisation assertion.
+    
+    """
+    for encoding in LIB.CLEncoding:
+        for value in values:
+            encoded = LIB.encode(typeof, value, encoding)
+            decoded = LIB.decode(encoded, encoding)
+            assert value == decoded

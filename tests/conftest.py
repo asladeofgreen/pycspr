@@ -9,6 +9,14 @@ import pycspr
 
 
 @pytest.fixture(scope="session")
+def al_kindi() -> str:
+    """Returns name of an ancient cryptographer. 
+    
+    """
+    return "أبو يوسف يعقوب بن إسحاق الصبّاح الكندي‎"
+
+
+@pytest.fixture(scope="session")
 def LIB() -> pycspr:
     """Returns pointer to configured library instance. 
     
@@ -20,22 +28,44 @@ def LIB() -> pycspr:
 
 
 @pytest.fixture(scope="session")
-def hash_data(LIB) -> typing.Tuple[bytes, typing.Tuple]:
-    """Returns set of test account key. 
+def hash_data(LIB, al_kindi) -> typing.Tuple[bytes, typing.Tuple]:
+    """Returns hashing test data. 
     
     """    
-    return b"al-kindi", (
+    return al_kindi.encode("utf-8"), (
         (
             LIB.crypto.HashAlgorithm.BLAKE2B, \
             LIB.crypto.HashEncoding.BYTES, \
-            b"H\x1d{\x97\xb0\xb1!\xb0\xaf\xcf\x89\x1a\xa2#]\x0f\xf2\xf5\xf8r\xe9\xeb\xe0\xa7\xb6z\xf5\x86\xcd\x1cyR",
+            b'Dh.\xa8kpO\xb3\xc6\\\xd1o\x84\xa7kb\x1e\x04\xbb\xdb7F(\x0f%\xcf\x06" \xe4q\xb4',
         ),
         (
             LIB.crypto.HashAlgorithm.BLAKE2B, \
             LIB.crypto.HashEncoding.HEX, \
-            "481d7b97b0b121b0afcf891aa2235d0ff2f5f872e9ebe0a7b67af586cd1c7952"
+            "44682ea86b704fb3c65cd16f84a76b621e04bbdb3746280f25cf062220e471b4"
         ),
     )
+
+
+@pytest.fixture(scope="session")
+def signature_data(LIB, al_kindi) -> typing.Tuple[bytes, typing.Tuple]:
+    """Returns signature test data. 
+    
+    """    
+    return al_kindi.encode("utf-8"), \
+        (
+            "2fa788bfd72abbad5272e478e16dda3cf04f171f1368cca3a6517471475e42a1", \
+            LIB.crypto.KeyAlgorithm.ED25519,
+        ), \
+        (
+            (
+                LIB.crypto.SignatureEncoding.HEX, \
+                "1b351aea89b1f030349f317841daaf80aa5984d4bda1df908b6adaedeca8e02514182e10b53deabe0e41115a6ef689185b4633012edf9b3ae17859e9e8bdda0c",
+            ),
+            (
+                LIB.crypto.SignatureEncoding.BYTES, \
+                b'\x1b5\x1a\xea\x89\xb1\xf004\x9f1xA\xda\xaf\x80\xaaY\x84\xd4\xbd\xa1\xdf\x90\x8bj\xda\xed\xec\xa8\xe0%\x14\x18.\x10\xb5=\xea\xbe\x0eA\x11Zn\xf6\x89\x18[F3\x01.\xdf\x9b:\xe1xY\xe9\xe8\xbd\xda\x0c',
+            ),
+        )
 
 
 @pytest.fixture(scope="session")

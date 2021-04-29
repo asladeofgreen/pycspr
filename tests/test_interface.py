@@ -94,16 +94,10 @@ _INTERFACE = {
 
 
 def test_library_version(LIB):
-    """Asserts library version.
-
-    """
     assert LIB.__version__ == "0.1.0"
 
 
 def test_library_exports(LIB):
-    """Asserts that library is exposing expected interface.
-
-    """
     for assertor, members in _INTERFACE.items():
         for member in members:
             assertor(LIB, member)

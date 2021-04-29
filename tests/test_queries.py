@@ -77,7 +77,7 @@ def test_get_node_metrics_01(LIB):
     def _assert(response):
         # e.g. docs/api_reponses/rpc_metrics.json
         assert isinstance(response, list)
-        assert len(response) == 326
+        assert len(response) > 300
 
     _assert(LIB.get_node_metrics())
 
