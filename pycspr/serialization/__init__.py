@@ -4,6 +4,7 @@ from pycspr.serialization import byte_array
 from pycspr.serialization import byte_stream
 from pycspr.serialization import hex_string
 from pycspr.serialization.utils import ByteArray
+from pycspr.serialization.utils import CLType
 from pycspr.serialization.utils import ByteStream
 from pycspr.serialization.utils import CLEncoding
 from pycspr.serialization.utils import CLType
@@ -22,23 +23,23 @@ CODECS = {
 
 
 def decode(
-    typeof: CLType,
     data: typing.Union[ByteArray, ByteStream, HexString],
     encoding: CLEncoding,
     ) -> object:
     """Returns domain type instance decoded from a previously encoded instance.
 
-    :param typeof: Domain type to which data can be mapped, e.g. BOOL.
     :param data: Domain data appropriately encoded.
-    :param encoding: A supported domain type encoding, e.g. BYTE_ARRAY.
+    :param encoding: A supported encoding.
 
     :returns: Domain type instance.
 
     """
-    if encoding not in CODECS:
-        raise DecoderError(encoding, "decoder unsupported")    
+    try:
+        codec = CODECS[encoding]
+    except KeyError:
+        raise DecoderError(encoding, "Unsupported encoding.")    
 
-    return CODECS[encoding].decode(typeof, data)
+    return codec.decode(data)
 
 
 def encode(
@@ -50,12 +51,14 @@ def encode(
 
     :param typeof: Domain type to which data can be mapped, e.g. BOOL.
     :param value: Domain type instance to be encoded.
-    :param encoding: A supported domain type encoding, e.g. BYTE_ARRAY.
+    :param encoding: A supported encoding.
 
     :returns: Domain instance appropriately encoded.
 
     """
-    if encoding not in CODECS:
-        raise EncoderError(encoding, "encoder unsupported")    
+    try:
+        codec = CODECS[encoding]
+    except KeyError:
+        raise EncoderError(encoding, "Unsupported encoding.")  
 
-    return CODECS[encoding].encode(typeof, value)
+    return codec.encode(typeof, value)

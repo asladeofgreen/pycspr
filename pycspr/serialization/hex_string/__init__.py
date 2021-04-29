@@ -6,25 +6,29 @@ from pycspr.serialization.utils import EncoderError
 
 
 
-def decode(typeof: CLType, data: HexString) -> object:
-    """Returns domain type instance decoded from a previously encoded instance.
+def decode(data: HexString) -> object:
+    """Returns domain type instance decoded from a hexidecimal string representation.
 
-    :param typeof: Domain type to which data can be mapped, e.g. BOOL.
-    :param data: Domain data appropriately encoded.
+    :param data: Domain data encoded as a hexidecimal string.
 
-    :returns: Domain type instance.
+    :returns: A domain type instance.
 
     """
-    return byte_stream.decode(typeof, bytes.fromhex(data))
+    try:
+        assert isinstance(data, str) and len(data) > 0
+    except AssertionError:
+        raise DecoderError(ENCODING, f"Input data cannot be decoded.")
+
+    return byte_stream.decode(bytes.fromhex(data))
 
 
 def encode(typeof: CLType, value: object) -> HexString:
-    """Returns an instance of a domain type encoded as a byte array.
+    """Returns a domain type instance encoded as a byte stream.
 
     :param typeof: Domain type to which data can be mapped, e.g. BOOL.
     :param value: Domain type instance to be encoded.
 
     :returns: Domain instance appropriately encoded.
 
-    """
+    """   
     return byte_stream.encode(typeof, value).hex()

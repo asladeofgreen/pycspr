@@ -1,6 +1,9 @@
-from pycspr.serialization.utils import ByteArray
+from pycspr.serialization.utils import CLType
 
 
+
+# Formal type within CL type system.
+TYPEOF = CLType.STRING
 
 # Default character encoding.
 _ENCODING = "utf-8"
@@ -22,5 +25,5 @@ get_encoded_length = lambda v: len(bytes(data))
 is_decodeable = lambda encoded: isinstance(encoded, list)
 
 
-# A predicate returning a flag indicating whether value can be encoded.
+# A predicate returning a flag indicating whether domain type instance can be encoded.
 is_encodeable = lambda value: isinstance(value, str)

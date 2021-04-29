@@ -10,10 +10,14 @@ from pycspr.serialization.byte_array import cl_u256
 from pycspr.serialization.byte_array import cl_u512
 from pycspr.serialization.byte_array import cl_unit
 from pycspr.serialization.utils import ByteArray
+from pycspr.serialization.utils import CLEncoding
 from pycspr.serialization.utils import CLType
 from pycspr.serialization.utils import DecoderError
 from pycspr.serialization.utils import EncoderError
 
+
+# Type of encoder.
+ENCODING = CLEncoding.BYTE_ARRAY
 
 # Map: CL type <-> codec.
 CODECS = {
@@ -30,32 +34,65 @@ CODECS = {
     CLType.UNIT: cl_unit,
 }
 
+# Set of supported type prefixes.
+TYPE_TAGS = set([i.value for i in list(CLType)])
 
-def decode(typeof: CLType, data: ByteArray) -> object:
+
+def decode(data: ByteArray) -> object:
     """Returns domain type instance decoded from a previously encoded instance.
 
-    :param typeof: Domain type to which data can be mapped, e.g. BOOL.
     :param data: Domain data appropriately encoded.
 
     :returns: Domain type instance.
 
     """
-    if typeof not in CODECS:
-        raise DecoderError(encoding, "decoder unsupported")    
+    # Verify data is decodeable - 1.
+    try:
+        assert isinstance(data, list) and len(data) > 0
+    except AssertionError:
+        raise DecoderError(ENCODING, f"Input data cannot be decoded.")
 
-    return CODECS[typeof].decode(data)
+    # Destructure type tag and byte array from input data.
+    tag, data = data[0], data[1:]
+
+    # Map type tag -> CL type.
+    try:
+        typeof = CLType(tag)
+    except ValueError:
+        raise DecoderError(ENCODING, f"Input data cannot be decoded.")    
+
+    # Map CL type -> codec.
+    try:
+        codec = CODECS[typeof]
+    except KeyError:
+        raise DecoderError(ENCODING, f"{typeof} decoder unsupported")    
+
+    # Verify data is decodeable - 2.
+    try:
+        assert codec.is_decodeable(data)
+    except AssertionError:
+        raise DecoderError(ENCODING, f"{typeof} {data} decoding unfeasible")    
+
+    return codec.decode(data)
 
 
 def encode(typeof: CLType, value: object) -> ByteArray:
-    """Returns an instance of a domain type encoded as a byte array.
+    """Returns a domain type instance encoded as a byte array.
 
     :param typeof: Domain type to which data can be mapped, e.g. BOOL.
     :param value: Domain type instance to be encoded.
 
     :returns: Domain instance appropriately encoded.
 
-    """
-    if typeof not in CODECS:
-        raise EncoderError(typeof, "type encoder unsupported")    
+    """    
+    try:
+        codec = CODECS[typeof]
+    except KeyError:
+        raise EncoderError(ENCODING, f"{typeof} encoder unsupported")
 
-    return CODECS[typeof].encode(value)
+    try:
+        assert codec.is_encodeable(value)
+    except AssertionError:
+        raise EncoderError(ENCODING, f"{typeof} -- {value} encoding unfeasible")    
+
+    return [typeof.value] + codec.encode(value)
