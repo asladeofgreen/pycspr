@@ -60,9 +60,6 @@ class CLType(enum.Enum):
     # TUPLE_3 = 20
     # ANY = 21
 
-    TYPE = 13
-
-
 
 class CLEncoding(enum.Enum):
     """Enumeration over set of supported value encodings.
@@ -70,7 +67,7 @@ class CLEncoding(enum.Enum):
     """
     BYTE_ARRAY = enum.auto()
     BYTE_STREAM = enum.auto()
-    HEX = enum.auto()
+    HEX_STRING = enum.auto()
 
 
 class DecoderError(Exception):

@@ -18,7 +18,7 @@ from pycspr.serialization.utils import HexString
 CODECS = {
     CLEncoding.BYTE_ARRAY: byte_array,
     CLEncoding.BYTE_STREAM: byte_stream,
-    CLEncoding.HEX: hex_string,
+    CLEncoding.HEX_STRING: hex_string,
 }
 
 

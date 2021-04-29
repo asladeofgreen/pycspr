@@ -84,9 +84,10 @@ def test_get_key_pair_04(LIB, key_pair_specs):
     for key_algo, key_encoding, _, _, _ in key_pair_specs:
         pvk, pbk = LIB.crypto.get_key_pair(key_algo, key_encoding)
 
-        path_to_pvk_pem_file = \
-            LIB.crypto.get_pvk_pem_file_from_bytes(bytes.fromhex(pvk), key_algo) if key_encoding == LIB.crypto.KeyEncoding.HEX else \
-            LIB.crypto.get_pvk_pem_file_from_bytes(pvk, key_algo)
+        if key_encoding == LIB.crypto.KeyEncoding.HEX:
+            path_to_pvk_pem_file = LIB.crypto.get_pvk_pem_file_from_bytes(bytes.fromhex(pvk), key_algo)
+        else:
+            path_to_pvk_pem_file = LIB.crypto.get_pvk_pem_file_from_bytes(pvk, key_algo)
         assert pathlib.Path(path_to_pvk_pem_file).is_file()
 
         pvk_1, pbk_1 = LIB.crypto.get_key_pair_from_pvk_pem_file(path_to_pvk_pem_file, key_algo, key_encoding)

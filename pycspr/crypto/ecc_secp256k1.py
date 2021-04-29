@@ -31,10 +31,31 @@ def get_key_pair_from_pvk_b64(pvk_b64: str):
     :returns : 2 member tuple: (private key, public key)
     
     """
-    pvk = base64.b64decode(pvk_b64)
+    return get_key_pair_from_pvk_bytes(base64.b64decode(pvk_b64))
+
+
+def get_key_pair_from_pvk_bytes(pvk: bytes) -> typing.Tuple[bytes, bytes]:
+    """Returns an ED25519 key pair derived from a byte array representation of a private key.
+
+    :param pvk: 32 byte array representing a private key.
+
+    :returns : 2 member tuple: (private key, public key)
+    
+    """
     sk = ecdsa.SigningKey.from_string(pvk, curve=CURVE)
 
     return _get_key_pair_from_sk(sk)
+
+
+def get_key_pair_from_pvk_hex_string(pvk_hex: str) -> typing.Tuple[bytes, bytes]:
+    """Returns an ED25519 key pair derived from a previously base 64 private key.
+
+    :param pvk_b64: Base64 encoded private key.
+
+    :returns : 2 member tuple: (private key, public key)
+    
+    """
+    return get_key_pair_from_pvk_bytes(bytes.fromhex(pvk_hex))
 
 
 def get_key_pair_from_pvk_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
@@ -45,10 +66,8 @@ def get_key_pair_from_pvk_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     :returns : 2 member tuple: (private key, public key)
     
     """
-    pvk = _get_bytes_from_pem_file(fpath).decode("UTF-8")
-    sk = ecdsa.SigningKey.from_pem(pvk)
-
-    return _get_key_pair_from_sk(sk)
+    with open(fpath, "rb") as f:
+        return _get_key_pair_from_sk(ecdsa.SigningKey.from_pem(f.read()))
 
 
 def get_key_pair_from_seed(seed: bytes) -> typing.Tuple[bytes, bytes]:
@@ -71,14 +90,6 @@ def get_pvk_pem_from_bytes(pvk: bytes) -> bytes:
     sk = ecdsa.SigningKey.from_string(pvk, curve=CURVE)
 
     return sk.to_pem()
-
-
-def _get_bytes_from_pem_file(fpath: str) -> bytes:
-    """Returns bytes from a pem file.
-    
-    """
-    with open(fpath, "rb") as f:
-        return f.read()
 
 
 def _get_key_pair_from_sk(sk: ecdsa.SigningKey) -> typing.Tuple[bytes, bytes]:
