@@ -1,7 +1,8 @@
+import typing
+
 import jsonrpcclient as rpc_client
 
 import pycspr
-from pycspr.crypto import get_account_hash
 
 
 
@@ -10,7 +11,7 @@ _API_ENDPOINT = "chain_get_block"
 
 
 def execute(
-    block_id: str = None,
+    block_id: typing.Union[None, str, int] = None,
     parse_response: bool = True,
     ) -> dict:
     """Returns on-chain block information.
@@ -21,8 +22,24 @@ def execute(
     :returns: On-chain block information.
 
     """
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT,
-        block_identifier=block_id,
+    # Get latest.
+    if isinstance(block_id, type(None)):
+        response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT)
+
+    # Get by hash.
+    elif isinstance(block_id, str):
+        response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT, 
+            block_identifier={
+                "Hash": block_id
+            }
+        )
+
+    # Get by height.
+    elif isinstance(block_id, int):
+        response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT, 
+            block_identifier={
+                "Height": block_id
+            }
         )
 
     return response.data.result["block"] if parse_response else response.data.result

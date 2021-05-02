@@ -21,19 +21,28 @@ class NodeConnectionInfo:
     port_sse: int = 60101
 
     @property
+    def address(self) -> str:
+        """A node's server base address."""
+        return f"http://{self.host}"
+
+    @property
     def address_rest(self) -> str:
         """A node's REST server base address."""
-        return f"http://{self.host}:{self.port_rest}"
+        return f"{self.address}:{self.port_rest}"
 
     @property
     def address_rpc(self) -> str:
         """A node's RPC server base address."""
-        return f"http://{self.host}:{self.port_rpc}/rpc"
+        return f"{self.address}:{self.port_rpc}/rpc"
 
     @property
     def address_sse(self) -> str:
         """A node's SSE server base address."""
-        return f"http://{self.host}:{self.port_sse}/events"
+        return f"{self.address}:{self.port_sse}/events"
+
+    def __str__(self):
+        """Instance string representation."""
+        return self.host
 
 
 class NodeEventType(enum.Enum):

@@ -1,8 +1,10 @@
 from pycspr.queries.get_account_balance import execute as get_account_balance
 from pycspr.queries.get_account_info import execute as get_account_info
+from pycspr.queries.get_account_info_by_account_hash import execute as get_account_info_by_account_hash
 from pycspr.queries.get_account_main_purse_uref import execute as get_account_main_purse_uref
 from pycspr.queries.get_auction_info import execute as get_auction_info
 from pycspr.queries.get_block import execute as get_block
+from pycspr.queries.get_deploy import execute as get_deploy
 from pycspr.queries.get_era_info import execute as get_era_info
 from pycspr.queries.get_events import execute as get_events
 from pycspr.queries.get_node_metrics import execute as get_node_metrics

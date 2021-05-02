@@ -1,12 +1,6 @@
-import jsonrpcclient as rpc_client
-
-import pycspr
 from pycspr.crypto import get_account_hash
+from pycspr.queries.get_account_info_by_account_hash import execute as get_account_info_by_account_hash
 
-
-
-# RPC method to be invoked.
-_API_ENDPOINT = "state_get_item"
 
 
 def execute(
@@ -23,12 +17,8 @@ def execute(
     :returns: Account information in JSON format.
 
     """
-    account_hash = get_account_hash(account_key)
-
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT,
-        key=f"account-hash-{account_hash}",
-        state_root_hash=state_root_hash,
-        path=[]
-        )
-
-    return response.data.result["stored_value"]["Account"] if parse_response else response.data.result
+    return get_account_info_by_account_hash(
+        get_account_hash(account_key),
+        state_root_hash,
+        parse_response
+    )

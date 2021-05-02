@@ -21,8 +21,24 @@ def execute(
     :returns: Era information.
 
     """
-    response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT,
-        block_identifier=block_id,
+    # Get latest.
+    if isinstance(block_id, type(None)):
+        response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT)
+
+    # Get by hash.
+    elif isinstance(block_id, str):
+        response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT, 
+            block_identifier={
+                "Hash": block_id
+            }
         )
+
+    # Get by height.
+    elif isinstance(block_id, int):
+        response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT, 
+            block_identifier={
+                "Height": block_id
+            }
+        )    
 
     return response.data.result["era_summary"] if parse_response else response.data.result

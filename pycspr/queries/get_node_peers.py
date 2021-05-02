@@ -8,7 +8,7 @@ import pycspr
 _API_ENDPOINT = "info_get_peers"
 
 
-def execute() -> dict:
+def execute(parse_response: bool = True) -> dict:
     """Returns node peers information.
 
     :returns: Node peers information.
@@ -16,4 +16,4 @@ def execute() -> dict:
     """
     response = rpc_client.request(pycspr.CONNECTION.address_rpc, _API_ENDPOINT)
 
-    return response.data.result
+    return response.data.result["peers"] if parse_response else response.data.result
