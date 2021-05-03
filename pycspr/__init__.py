@@ -42,7 +42,7 @@ from pycspr.queries       import get_switch_block
 
 # Lib metadata.
 __title__ = "pycspr"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Mark A. Greenslade"
 __license__ = "Apache 2.0"
 
