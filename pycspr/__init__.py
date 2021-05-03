@@ -26,6 +26,7 @@ from pycspr.queries       import get_account_info_by_account_hash
 from pycspr.queries       import get_account_main_purse_uref
 from pycspr.queries       import get_auction_info
 from pycspr.queries       import get_block
+from pycspr.queries       import get_block_transfers
 from pycspr.queries       import get_deploy
 from pycspr.queries       import get_era_info
 from pycspr.queries       import get_events
