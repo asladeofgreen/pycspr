@@ -94,7 +94,7 @@ _INTERFACE = {
 
 
 def test_library_version(LIB):
-    assert LIB.__version__ == "0.1.0"
+    assert LIB.__version__ == "0.2.0"
 
 
 def test_library_exports(LIB):
