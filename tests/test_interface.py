@@ -54,7 +54,7 @@ def _has_member(mod, member):
 
 
 # Expected interface.
-_INTERFACE = {
+_INTERFACE_OF_LIBRARY = {
     _has_class: {
         "NodeConnectionInfo",
     },
@@ -92,12 +92,33 @@ _INTERFACE = {
     },
 }
 
+# Expected interface of factory methods.
+_INTERFACE_OF_FACTORY = {
+    _has_function: {
+        "create_cl_value",
+        "create_deploy_approval",
+        "create_deploy_for_a_transfer",
+        "create_deploy_header",
+        "create_named_arg",      
+    },
+}
 
-def test_library_version(LIB):
+
+def test_version_of_library(LIB):
     assert LIB.__version__ == "0.2.0"
 
 
-def test_library_exports(LIB):
-    for assertor, members in _INTERFACE.items():
+def test_exports_of_library(LIB):
+    for assertor, members in _INTERFACE_OF_LIBRARY.items():
         for member in members:
             assertor(LIB, member)
+
+
+def test_exports_of_factory(LIB):
+    _test_exports(LIB.factory, _INTERFACE_OF_FACTORY)
+
+
+def _test_exports(module, interface):
+    for assertor, members in interface.items():
+        for member in members:
+            assertor(module, member)

@@ -17,6 +17,22 @@ def al_kindi() -> str:
 
 
 @pytest.fixture(scope="session")
+def bytes_to_hash(al_kindi) -> bytes:
+    """Returns some bytes to use as input to a hashing algo. 
+    
+    """
+    return  al_kindi.encode("utf-8")
+
+
+@pytest.fixture(scope="session")
+def bytes_to_sign(al_kindi) -> bytes:
+    """Returns some bytes to use as input to a signature algo. 
+    
+    """
+    return  al_kindi.encode("utf-8")
+
+
+@pytest.fixture(scope="session")
 def LIB() -> pycspr:
     """Returns pointer to configured library instance. 
     
@@ -28,11 +44,11 @@ def LIB() -> pycspr:
 
 
 @pytest.fixture(scope="session")
-def hash_data(LIB, al_kindi) -> typing.Tuple[bytes, typing.Tuple]:
+def hash_data(LIB, bytes_to_hash) -> typing.Tuple[bytes, typing.Tuple]:
     """Returns hashing test data. 
     
     """    
-    return al_kindi.encode("utf-8"), (
+    return bytes_to_hash, (
         (
             LIB.crypto.HashAlgorithm.BLAKE2B, \
             LIB.crypto.HashEncoding.BYTES, \
@@ -47,11 +63,11 @@ def hash_data(LIB, al_kindi) -> typing.Tuple[bytes, typing.Tuple]:
 
 
 @pytest.fixture(scope="session")
-def signature_data(LIB, al_kindi) -> typing.Tuple[bytes, typing.Tuple]:
+def signature_data(LIB, bytes_to_sign) -> typing.Tuple[bytes, typing.Tuple]:
     """Returns signature test data. 
     
     """    
-    return al_kindi.encode("utf-8"), \
+    return bytes_to_sign, \
         (
             "2fa788bfd72abbad5272e478e16dda3cf04f171f1368cca3a6517471475e42a1", \
             LIB.crypto.KeyAlgorithm.ED25519,
@@ -69,7 +85,7 @@ def signature_data(LIB, al_kindi) -> typing.Tuple[bytes, typing.Tuple]:
 
 
 @pytest.fixture(scope="session")
-def account_keys(LIB) -> typing.Tuple[pycspr.crypto.KeyAlgorithm, str, str]:
+def account_keys(LIB) -> typing.Tuple[typing.Tuple[pycspr.crypto.KeyAlgorithm, str, str]]:
     """Returns set of test account key. 
     
     """    
@@ -84,6 +100,35 @@ def account_keys(LIB) -> typing.Tuple[pycspr.crypto.KeyAlgorithm, str, str]:
             "0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2", \
             "95a90f4a251a8a66621704e0560a51786ce90559448e49bd21934c4aa4d91948"
         ),
+    )
+
+
+@pytest.fixture(scope="session")
+def account_key_ed25519(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
+    """Returns set of test account key. 
+    
+    """
+    algo, pbk_hex, pvk_hex = account_keys[0]
+
+    return LIB.types.AccountKeyInfo(
+        pbk=bytes.fromhex(pbk_hex),
+        pvk=bytes.fromhex(pvk_hex),
+        algo=algo
+    )
+
+
+
+@pytest.fixture(scope="session")
+def account_key_secp256k1(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
+    """Returns set of test account key. 
+    
+    """
+    algo, pbk_hex, pvk_hex = account_keys[1]
+
+    return LIB.types.AccountKeyInfo(
+        pbk=bytes.fromhex(pbk_hex),
+        pvk=bytes.fromhex(pvk_hex),
+        algo=algo
     )
 
 

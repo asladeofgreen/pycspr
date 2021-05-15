@@ -183,9 +183,6 @@ def get_signature_from_pem_file(
     """Returns an ED25519 digital signature of data signed from a PEM file representation of a private key.
     
     """
-    return get_signature(
-        get_key_pair_from_pem_file(fpath, algo),
-        data,
-        algo,
-        encoding
-        )
+    pvk, _ = get_key_pair_from_pem_file(fpath, algo)
+
+    return get_signature(pvk, data, algo, encoding)
