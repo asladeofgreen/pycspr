@@ -1,4 +1,4 @@
-from pycspr.serialization.byte_array import cl_bool
+from pycspr.serialization.byte_array import cl_boolean
 from pycspr.serialization.byte_array import cl_i32
 from pycspr.serialization.byte_array import cl_i64
 from pycspr.serialization.byte_array import cl_string
@@ -21,7 +21,7 @@ ENCODING = CLEncoding.BYTE_ARRAY
 
 # Map: CL type <-> codec.
 CODECS = {
-    CLType.BOOL: cl_bool,
+    CLType.BOOL: cl_boolean,
     CLType.I32: cl_i32,
     CLType.I64: cl_i64,    
     CLType.STRING: cl_string,

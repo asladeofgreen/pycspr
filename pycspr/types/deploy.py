@@ -1,8 +1,8 @@
 import dataclasses
 import datetime
-import enum
 import typing
 
+from pycspr.types.cl import CLValue
 
 
 
@@ -31,49 +31,8 @@ Timestamp = typing.NewType("ISO compliant timestamp", datetime.datetime)
 TimeDifference = typing.NewType("A temporal offset from now", datetime.time)
 
 
-class CLType(enum.Enum):
-    """Domain type: enumeration over set of low level CL types.
-    
-    """
-    BOOL = 0
-    I32 = 1
-    I64 = 2
-    U8 = 3
-    U32 = 4
-    U64 = 5
-    U128 = 6
-    U256 = 7
-    U512 = 8
-    UNIT = 9
-    STRING = 10
-    KEY = 11
-    UREF = 12
-    OPTION = 13
-    LIST = 14
-    BYTE_ARRAY = 15
-    RESULT = 16
-    MAP = 17
-    TUPLE_1 = 18
-    TUPLE_2 = 19
-    TUPLE_3 = 20
-    ANY = 21
-    PUBLIC_KEY = 22
-
-
 @dataclasses.dataclass
-class CLValue():
-    """Domain type: a value to be interpreted by node software.
-    
-    """
-    # Byte array representation of underlying data.
-    bytes: bytes
-
-    # Type information used by a deserializer.
-    cl_type: CLType
-
-
-@dataclasses.dataclass
-class NamedArg():
+class DeployNamedArg():
     """Domain type: a named argument to be mapped to a contract function parameter.
     
     """
@@ -102,7 +61,7 @@ class DeployExecutable():
     
     """
     # Set of arguments mapped to endpoint parameters.
-    args: typing.List[NamedArg]
+    args: typing.List[DeployNamedArg]
 
 
 @dataclasses.dataclass
@@ -110,7 +69,7 @@ class DeployExecutable_ModuleBytes(DeployExecutable):
     """Encapsulates information required to execute an in-line wasm binary.
     
     """
-    # Raw wASM payload.
+    # Raw WASM payload.
     module_bytes: bytes
 
 

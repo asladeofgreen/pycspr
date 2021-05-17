@@ -33,6 +33,14 @@ def bytes_to_sign(al_kindi) -> bytes:
 
 
 @pytest.fixture(scope="session")
+def chain_name() -> str:
+    """Returns name of a test chain. 
+    
+    """
+    return "casper-net-1"
+
+
+@pytest.fixture(scope="session")
 def LIB() -> pycspr:
     """Returns pointer to configured library instance. 
     
@@ -104,8 +112,8 @@ def account_keys(LIB) -> typing.Tuple[typing.Tuple[pycspr.crypto.KeyAlgorithm, s
 
 
 @pytest.fixture(scope="session")
-def account_key_ed25519(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
-    """Returns set of test account key. 
+def account_info(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
+    """Returns a test account key. 
     
     """
     algo, pbk_hex, pvk_hex = account_keys[0]
@@ -117,10 +125,23 @@ def account_key_ed25519(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
     )
 
 
+@pytest.fixture(scope="session")
+def account_info_ed25519(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
+    """Returns a test ED25519 account key. 
+    
+    """
+    algo, pbk_hex, pvk_hex = account_keys[0]
+
+    return LIB.types.AccountKeyInfo(
+        pbk=bytes.fromhex(pbk_hex),
+        pvk=bytes.fromhex(pvk_hex),
+        algo=algo
+    )
+
 
 @pytest.fixture(scope="session")
-def account_key_secp256k1(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
-    """Returns set of test account key. 
+def account_info_secp256k1(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
+    """Returns a test SECP256K1 account key. 
     
     """
     algo, pbk_hex, pvk_hex = account_keys[1]

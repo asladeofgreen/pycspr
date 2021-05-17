@@ -19,6 +19,14 @@ class AccountKeyInfo:
     algo: crypto.KeyAlgorithm = crypto.KeyAlgorithm.ED25519
 
 
+    @property
+    def account_key(self):
+        """Returns on-chain account key.
+
+        """ 
+        return crypto.get_account_key(self.algo, self.pbk.hex())
+
+
     def get_signature(self, data: bytes) -> bytes:
         """Get signature over payload.
         
