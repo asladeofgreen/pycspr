@@ -1,6 +1,6 @@
 import time
 
-from pycspr.queries.get_block import execute as get_block
+from pycspr.api.get_block import execute as get_block
 
 
 

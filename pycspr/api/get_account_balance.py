@@ -16,7 +16,7 @@ def execute(
     state_root_hash: str = None,
     parse_response: bool = True,
     ) -> typing.Union[int, dict]:
-    """Queries account balance at a certain state root hash.
+    """api account balance at a certain state root hash.
 
     :param purse_uref: URef of a purse associated with an on-chain account.
     :param state_root_hash: A node's root state hash at some point in chain time.

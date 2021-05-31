@@ -14,7 +14,7 @@ def execute(
     state_root_hash=None,
     parse_response: bool = True,
     ) -> dict:
-    """Queries account information at a certain state root hash.
+    """api account information at a certain state root hash.
 
     :param account_hash: An on-chain account identifier derived from it's associated public key.
     :param state_root_hash: A node's root state hash at some point in chain time.

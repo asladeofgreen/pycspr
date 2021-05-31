@@ -1,4 +1,4 @@
-from pycspr.queries.get_account_info import execute as get_account_info
+from pycspr.api.get_account_info import execute as get_account_info
 
 
 def execute(

@@ -3,7 +3,7 @@ import typing
 import jsonrpcclient as rpc_client
 
 import pycspr
-from pycspr.queries.get_rpc_schema import execute as get_rpc_schema
+from pycspr.api.get_rpc_schema import execute as get_rpc_schema
 
 
 def execute(
