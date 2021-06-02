@@ -13,7 +13,7 @@ def test_create_cl_value(LIB):
 def test_create_deploy_named_arg(LIB, al_kindi):
     assert isinstance(
         LIB.factory.create_deploy_named_arg("a-string-arg", LIB.types.CLType.STRING, al_kindi),
-        LIB.types.NamedArg
+        LIB.types.DeployNamedArg
         )
 
 

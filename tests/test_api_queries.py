@@ -94,7 +94,7 @@ def test_get_node_metrics_02(LIB):
 def test_get_node_peers(LIB):
     def _assert(response):
         # e.g. docs/api_reponses/rpc_info_get_peers.json
-        assert isinstance(response, dict)
+        assert isinstance(response, list)
 
     _assert(LIB.get_node_peers())
 

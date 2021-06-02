@@ -3,11 +3,13 @@ import typing
 
 from pycspr import crypto
 from pycspr.types.account import AccountKeyInfo
-from pycspr.types.deploy import CLType, DeployExecutable_ModuleBytes, Digest
-from pycspr.types.deploy import CLValue
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLValue
 from pycspr.types.deploy import Deploy
+from pycspr.types.deploy import Digest
 from pycspr.types.deploy import DeployApproval
 from pycspr.types.deploy import DeployHeader
+from pycspr.types.deploy import DeployExecutable_ModuleBytes
 from pycspr.types.deploy import DeployExecutable_Transfer
 from pycspr.types.deploy import DeployNamedArg
 
