@@ -37,12 +37,12 @@ def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, a_te
         )
 
 
-def test_create_deploy_header(LIB, account_info, test_chain_id):
+def test_create_deploy_header(LIB, account_info, a_test_chain_id):
     assert isinstance(
         LIB.factory.create_deploy_header(
             account=account_info.account_key,
             body_hash=None,
-            chain_name=test_chain_id,
+            chain_name=a_test_chain_id,
             dependencies=[],
             timestamp=datetime.datetime.utcnow(),
             ttl=30000,
