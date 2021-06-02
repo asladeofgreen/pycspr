@@ -5,9 +5,13 @@ import secrets
 
 
 def test_get_hash(LIB, fixtures_for_hash_tests):
-    for data, hash_info in fixtures_for_hash_tests:
-        for algo, encoding, digest in hash_info:
-            assert LIB.crypto.get_hash(data, 32, algo, encoding) == digest
+    for fixture in fixtures_for_hash_tests:
+        data = fixture["data"].encode("utf-8")
+        for hash_info in fixture["hashes"]:
+            algo = LIB.crypto.HashAlgorithm[hash_info["algo"]]
+            encoding = LIB.crypto.HashEncoding[hash_info["encoding"]]
+            digest = hash_info["digest"]
+            assert digest == LIB.crypto.get_hash(data, 32, algo, encoding)
 
 
 def test_get_account_key(LIB, account_keys):

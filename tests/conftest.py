@@ -48,7 +48,7 @@ def a_test_bytearray() -> bytes:
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_hash_tests(LIB) -> list:
+def fixtures_for_hash_tests_1(LIB) -> list:
     """Returns a set of test hashes for use as input to upstream tests. 
     
     """
@@ -64,6 +64,14 @@ def fixtures_for_hash_tests(LIB) -> list:
         return [data.encode("utf-8"), [_map_hash(i) for i in hash_set]]
 
     return [_map_fixture(i) for i in _get_asset("fixtures_for_hash_tests.json", json.load)]
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_hash_tests(LIB) -> list:
+    """Returns a set of test signatures for use as input to upstream tests. 
+    
+    """
+    return _get_asset("fixtures_for_hash_tests.json", json.load)["fixtures"]
 
 
 @pytest.fixture(scope="session")
