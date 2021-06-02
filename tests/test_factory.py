@@ -37,15 +37,26 @@ def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, a_te
         )
 
 
-def test_create_deploy_header(LIB, account_info, a_test_chain_id):
+def test_create_deploy_header_1(LIB, account_info, a_test_chain_id):
     assert isinstance(
         LIB.factory.create_deploy_header(
-            account=account_info.account_key,
+            account_key=account_info.account_key,
             body_hash=None,
             chain_name=a_test_chain_id,
             dependencies=[],
             timestamp=datetime.datetime.utcnow(),
-            ttl=30000,
+            ttl="1day",
+        ), 
+        LIB.types.DeployHeader
+        )
+
+
+def test_create_deploy_header_2(LIB, account_info, a_test_chain_id):
+    assert isinstance(
+        LIB.factory.create_deploy_header(
+            account_key=account_info.account_key,
+            body_hash=None,
+            chain_name=a_test_chain_id
         ), 
         LIB.types.DeployHeader
         )
@@ -56,7 +67,6 @@ def test_create_deploy_session_for_transfer(LIB):
         LIB.factory.create_session_for_transfer(
             amount = 1e9,
             correlation_id = random.randint(0, 124),
-            source_purse = None,
             target_account = bytes([]),
             ),
         LIB.types.DeployExecutable_Transfer

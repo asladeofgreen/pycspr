@@ -1,9 +1,3 @@
-import time
-
-import pytest
-
-
-
 def test_get_state_root_hash(LIB):
     def _assert(response):
         # e.g. 6e1f211643d870e1f3135ed85d64ba1ee212304d889692d16d0291d3bbdf1712

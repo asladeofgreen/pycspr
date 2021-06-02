@@ -2,8 +2,8 @@ import dataclasses
 import datetime
 import typing
 
-from pycspr.types.cl import CLValue
-
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLTypeInfo
 
 
 # Domain type: chain name.
@@ -27,20 +27,8 @@ Signature = typing.NewType("64 byte array emitted by an ECC algorithm", bytes)
 # Domain type: representing a output of a hashing function.
 Timestamp = typing.NewType("ISO compliant timestamp", datetime.datetime)
 
-# Domain type: representing a output of a hashing function.
-TimeDifference = typing.NewType("A temporal offset from now", datetime.time)
-
-
-@dataclasses.dataclass
-class DeployNamedArg():
-    """Domain type: a named argument to be mapped to a contract function parameter.
-    
-    """
-    # Argument name mapped to an entry point parameter.
-    name: str
-    
-    # Argument value. 
-    value: CLValue
+# Domain type: representing a temporal delta.
+HumamizedTimeDelta = typing.NewType("A temporal offset from now", str)
 
 
 @dataclasses.dataclass
@@ -53,6 +41,21 @@ class DeployApproval:
 
     # The digital signatutre signalling approval of deploy processing.
     signature: Signature
+
+
+@dataclasses.dataclass
+class DeployNamedArg():
+    """Domain type: a named argument to be mapped to a contract function parameter.
+    
+    """
+    # Associated CL type information.
+    cl_type_info: CLTypeInfo
+
+    # Argument name mapped to an entry point parameter.
+    name: str
+    
+    # Argument value. 
+    value: object
 
 
 @dataclasses.dataclass
@@ -138,7 +141,7 @@ class DeployHeader():
     timestamp: Timestamp
 
     # Time interval after which the deploy will no longer be considered for processing by a node.
-    ttl: TimeDifference
+    ttl: HumamizedTimeDelta
 
     # Hash of deploy payload.
     body_hash: Digest

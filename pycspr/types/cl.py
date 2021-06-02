@@ -30,7 +30,7 @@ class CLType(enum.Enum):
     TUPLE_3 = 20
     ANY = 21
     PUBLIC_KEY = 22
-
+            
                 
 @dataclasses.dataclass
 class CLTypeInfo():
@@ -47,51 +47,6 @@ class CLTypeInfo():
 
 
 @dataclasses.dataclass
-class CLTypeInfoForList(CLTypeInfo):
-    """Encapsulates CL type information associated with a list value.
-    
-    """
-    # Inner type within CSPR type system.
-    typeof_inner: CLType
-
-
-@dataclasses.dataclass
-class CLTypeInfoForTuple1(CLTypeInfo):
-    """Encapsulates CL type information associated with a 1-ary tuple value value.
-    
-    """
-    # Type of first value within 1-ary tuple value.
-    typeof_t0: CLType
-
-
-@dataclasses.dataclass
-class CLTypeInfoForTuple2(CLTypeInfo):
-    """Encapsulates CL type information associated with a 2-ary tuple value value.
-    
-    """
-    # Type of first value within 1-ary tuple value.
-    typeof_t0: CLType
-
-    # Type of first value within 2-ary tuple value.
-    typeof_t1: CLType
-
-
-@dataclasses.dataclass
-class CLTypeInfoForTuple3(CLTypeInfo):
-    """Encapsulates CL type information associated with a 3-ary tuple value value.
-    
-    """
-    # Type of first value within 1-ary tuple value.
-    typeof_t0: CLType
-
-    # Type of first value within 2-ary tuple value.
-    typeof_t1: CLType
-
-    # Type of first value within 3-ary tuple value.
-    typeof_t2: CLType
-
-
-@dataclasses.dataclass
 class CLTypeInfoForByteArray(CLTypeInfo):
     """Encapsulates CL type information associated with a byte array value.
     
@@ -101,15 +56,24 @@ class CLTypeInfoForByteArray(CLTypeInfo):
 
 
 @dataclasses.dataclass
+class CLTypeInfoForList(CLTypeInfo):
+    """Encapsulates CL type information associated with a list value.
+    
+    """
+    # Inner type within CSPR type system.
+    inner_type_info: CLTypeInfo
+
+
+@dataclasses.dataclass
 class CLTypeInfoForMap(CLTypeInfo):
     """Encapsulates CL type information associated with a byte array value.
     
     """
-    # Type of map's key.
-    typeof_key: CLType
+    # Type info of map's key.
+    key_type_info: CLType
 
-    # Type of map's value.
-    typeof_value: CLType
+    # Type info of map's value.
+    value_type_info: CLTypeInfo
 
 
 @dataclasses.dataclass
@@ -118,7 +82,43 @@ class CLTypeInfoForOption(CLTypeInfo):
     
     """
     # Inner type within CSPR type system.
-    typeof_inner: CLType
+    inner_type_info: CLTypeInfo
+
+
+@dataclasses.dataclass
+class CLTypeInfoForTuple1(CLTypeInfo):
+    """Encapsulates CL type information associated with a 1-ary tuple value value.
+    
+    """
+    # Type of first value within 1-ary tuple value.
+    t0_type_info: CLTypeInfo
+
+
+@dataclasses.dataclass
+class CLTypeInfoForTuple2(CLTypeInfo):
+    """Encapsulates CL type information associated with a 2-ary tuple value value.
+    
+    """
+    # Type of first value within 1-ary tuple value.
+    t0_type_info: CLTypeInfo
+
+    # Type of first value within 2-ary tuple value.
+    t1_type_info: CLTypeInfo
+
+
+@dataclasses.dataclass
+class CLTypeInfoForTuple3(CLTypeInfo):
+    """Encapsulates CL type information associated with a 3-ary tuple value value.
+    
+    """
+    # Type of first value within 1-ary tuple value.
+    t0_type_info: CLTypeInfo
+
+    # Type of first value within 2-ary tuple value.
+    t1_type_info: CLTypeInfo
+
+    # Type of first value within 3-ary tuple value.
+    t2_type_info: CLTypeInfo
 
 
 @dataclasses.dataclass
@@ -130,4 +130,7 @@ class CLValue():
     bytes: bytes
 
     # Type information used by a deserializer.
-    cl_type: CLTypeInfo
+    cl_type_info: CLTypeInfo
+
+    # Pythonic representation of underlying data.
+    parsed: object

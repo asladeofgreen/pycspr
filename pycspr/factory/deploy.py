@@ -4,6 +4,7 @@ import typing
 from pycspr import crypto
 from pycspr.types.account import AccountKeyInfo
 from pycspr.types.cl import CLType
+from pycspr.types.cl import CLTypeInfo
 from pycspr.types.cl import CLValue
 from pycspr.types.deploy import Deploy
 from pycspr.types.deploy import Digest
@@ -13,6 +14,23 @@ from pycspr.types.deploy import DeployExecutable_ModuleBytes
 from pycspr.types.deploy import DeployExecutable_Transfer
 from pycspr.types.deploy import DeployNamedArg
 
+
+
+def create_approval(
+    account_key_info: AccountKeyInfo, 
+    data: bytes
+    ) -> DeployApproval:
+    """Returns an approval authorizing a node to process a deploy.
+    
+    """
+    return DeployApproval(
+        signer=account_key_info.public_key, 
+        signature=crypto.get_signature(
+            data,
+            account_key_info.private_key,
+            algo=account_key_info.algo
+            )
+        )
 
 
 def create_cl_value(cl_type: CLType, value: object) -> CLValue:
@@ -26,34 +44,30 @@ def create_cl_value(cl_type: CLType, value: object) -> CLValue:
     )
 
 
-def create_deploy_named_arg(
-    value: object, 
-    cl_type: CLType, 
-    name: str
-    ) -> DeployNamedArg:
-    """Returns a named argument associated with deploy execution information (session|payment).
-    
-    """
-    return DeployNamedArg(
-        name = name,
-        value = create_cl_value(cl_type, value)
+def create_deploy(approvals, header, payment, session):
+    return Deploy(
+        approvals=approvals,
+        hash=None,
+        header=header,
+        payment=payment,
+        session=session
     )
 
 
-def create_deploy_header(
-    account: bytes,
-    timestamp: datetime,
-    ttl: int,
+def create_header(
+    account_key: bytes,
     body_hash: Digest,
-    dependencies: typing.List[Digest],
-    chain_name: str
+    chain_name: str,
+    dependencies: typing.List[Digest] = [],
+    timestamp: datetime = None,
+    ttl: str = "1day"
     ) -> DeployHeader:
     """Returns header information associated with a deploy.
     
     """
     return DeployHeader(
-        account=account,
-        timestamp=timestamp,
+        account=account_key,
+        timestamp=timestamp or datetime.utcnow(),
         ttl=ttl,
         body_hash=body_hash,
         dependencies=dependencies,
@@ -61,16 +75,31 @@ def create_deploy_header(
     )
 
 
-def create_payment_for_transfer(amount: int) -> DeployExecutable_ModuleBytes:
+def create_named_arg(
+    name: str,
+    value: object, 
+    cl_type_info: CLTypeInfo
+    ) -> DeployNamedArg:
+    """Returns a named argument associated with deploy execution information (session|payment).
+    
+    """
+    return DeployNamedArg(
+        cl_type_info = cl_type_info,
+        name = name,
+        value = value,
+    )
+
+
+def create_payment_for_transfer(amount: int = 10000) -> DeployExecutable_ModuleBytes:
     """Returns payment execution info for a native transfer.
     
     """
     return DeployExecutable_ModuleBytes(
         args=[
-            create_deploy_named_arg(
+            create_named_arg(
                 "amount",
-                CLType.U512,
                 amount,
+                CLType.U512
                 ),
         ],
         module_bytes=bytes([])
@@ -81,40 +110,26 @@ def create_session_for_transfer(
     amount: int, 
     target_account: bytes, 
     correlation_id: int, 
-    source_purse: str = None
     ) -> DeployExecutable_Transfer:
     """Returns session execution info for a native transfer.
     
     """
     return DeployExecutable_Transfer(
         args=[
-            create_deploy_named_arg(
+            create_named_arg(
                 "amount",
-                CLType.U512,
                 amount,
+                CLType.U512,
                 ),
-            create_deploy_named_arg(
+            create_named_arg(
                 "target",
-                CLType.PUBLIC_KEY,
                 target_account,
+                CLType.PUBLIC_KEY,
                 ),
-            create_deploy_named_arg(
+            create_named_arg(
                 "id",
-                CLType.U64,
                 correlation_id,
+                CLType.U64,
                 ),
         ]
-        )
-
-
-def create_deploy_approval(
-    account_key_info: AccountKeyInfo, 
-    data: bytes
-    ) -> DeployApproval:
-    """Returns an approval authorizing a node to process a deploy.
-    
-    """
-    return DeployApproval(
-        signer=account_key_info.pbk, 
-        signature=crypto.get_signature(data, account_key_info.pvk, algo=account_key_info.algo)
         )

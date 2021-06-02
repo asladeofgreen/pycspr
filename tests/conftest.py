@@ -128,6 +128,37 @@ def account_info(LIB, account_info_ed25519) -> pycspr.types.AccountKeyInfo:
     return account_info_ed25519
 
 
+def _get_account_info_of_nctl_user(LIB, user_id: int) -> pycspr.types.AccountKeyInfo:
+    """Returns account information related to NCTL user 1. 
+    
+    """
+    path = pathlib.Path(os.getenv("NCTL"))
+    path = path / "assets" / "net-1" / "users" / f"user-{user_id}" / "secret_key.pem"
+    (pvk, pbk) = LIB.crypto.get_key_pair_from_pem_file(path)
+
+    return LIB.types.AccountKeyInfo(
+        pbk=pbk,
+        pvk=pvk,
+        algo=LIB.crypto.KeyAlgorithm.ED25519
+    )
+
+
+@pytest.fixture(scope="session")
+def cp1(LIB) -> pycspr.types.AccountKeyInfo:
+    """Returns a test account key. 
+    
+    """
+    return _get_account_info_of_nctl_user(LIB, 1)
+
+
+@pytest.fixture(scope="session")
+def cp2(LIB) -> pycspr.types.AccountKeyInfo:
+    """Returns a test account key. 
+    
+    """
+    return _get_account_info_of_nctl_user(LIB, 2)
+
+
 @pytest.fixture(scope="session")
 def key_pair_specs(LIB) -> typing.Tuple[pycspr.crypto.KeyAlgorithm, str, str]:
     """Returns sets of specifications for key pair generation. 

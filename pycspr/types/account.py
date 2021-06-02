@@ -20,11 +20,31 @@ class AccountKeyInfo:
 
 
     @property
+    def private_key(self):
+        """Property synonym."""
+        return self.pvk
+
+
+    @property
+    def public_key(self):
+        """Property synonym."""
+        return self.pbk
+
+
+    @property
     def account_key(self):
         """Returns on-chain account key.
 
         """ 
         return crypto.get_account_key(self.algo, self.pbk.hex())
+
+
+    @property
+    def account_address(self):
+        """Returns on-chain account address.
+
+        """ 
+        return crypto.get_account_hash(self.account_key)
 
 
     def get_signature(self, data: bytes) -> bytes:
