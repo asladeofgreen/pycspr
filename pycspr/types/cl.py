@@ -86,6 +86,14 @@ class CLTypeInfoForOption(CLTypeInfo):
 
 
 @dataclasses.dataclass
+class CLTypeInfoForSimple(CLTypeInfo):
+    """Encapsulates CL type information associated with a simple value.
+    
+    """
+    pass
+
+
+@dataclasses.dataclass
 class CLTypeInfoForTuple1(CLTypeInfo):
     """Encapsulates CL type information associated with a 1-ary tuple value value.
     
@@ -129,8 +137,8 @@ class CLValue():
     # Byte array representation of underlying data.
     bytes: bytes
 
-    # Type information used by a deserializer.
-    cl_type_info: CLTypeInfo
-
-    # Pythonic representation of underlying data.
+    # Parsed pythonic representation of underlying data (for human convenience only).
     parsed: object
+
+    # Type information used by a deserializer.
+    type_info: CLTypeInfo

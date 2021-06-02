@@ -14,9 +14,9 @@ def test_exec_transfer(LIB, a_test_chain_id, cp1, cp2):
         payment_amount
         )
     session = LIB.factory.create_session_for_transfer(
-        transfer_amount,
-        target_address,
-        correlation_id
+        amount=transfer_amount,
+        target=target_address,
+        correlation_id=correlation_id
         )
     header=LIB.factory.create_deploy_header(
         account_key=cp1.account_key,

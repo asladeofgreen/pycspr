@@ -14,6 +14,10 @@ from pycspr.types.deploy import DeployExecutable_ModuleBytes
 from pycspr.types.deploy import DeployExecutable_Transfer
 from pycspr.types.deploy import DeployNamedArg
 
+from pycspr.factory.cl import create_type_info
+from pycspr.factory.cl import create_type_info_for_byte_array
+
+
 
 
 def create_approval(
@@ -78,13 +82,13 @@ def create_header(
 def create_named_arg(
     name: str,
     value: object, 
-    cl_type_info: CLTypeInfo
+    cl_type: typing.Union[CLType, CLTypeInfo]
     ) -> DeployNamedArg:
     """Returns a named argument associated with deploy execution information (session|payment).
     
     """
     return DeployNamedArg(
-        cl_type_info = cl_type_info,
+        cl_type_info = CLTypeInfo(cl_type) if isinstance(cl_type, CLType) else cl_type,
         name = name,
         value = value,
     )
@@ -96,11 +100,7 @@ def create_payment_for_transfer(amount: int = 10000) -> DeployExecutable_ModuleB
     """
     return DeployExecutable_ModuleBytes(
         args=[
-            create_named_arg(
-                "amount",
-                amount,
-                CLType.U512
-                ),
+            create_named_arg("amount", amount, CLType.U512),
         ],
         module_bytes=bytes([])
         )
@@ -108,7 +108,7 @@ def create_payment_for_transfer(amount: int = 10000) -> DeployExecutable_ModuleB
 
 def create_session_for_transfer(
     amount: int, 
-    target_account: bytes, 
+    target: bytes, 
     correlation_id: int, 
     ) -> DeployExecutable_Transfer:
     """Returns session execution info for a native transfer.
@@ -116,20 +116,8 @@ def create_session_for_transfer(
     """
     return DeployExecutable_Transfer(
         args=[
-            create_named_arg(
-                "amount",
-                amount,
-                CLType.U512,
-                ),
-            create_named_arg(
-                "target",
-                target_account,
-                CLType.PUBLIC_KEY,
-                ),
-            create_named_arg(
-                "id",
-                correlation_id,
-                CLType.U64,
-                ),
+            create_named_arg("amount", amount,         CLType.U512),
+            create_named_arg("target", target,         CLType.PUBLIC_KEY),
+            create_named_arg("id",     correlation_id, CLType.U64),            
         ]
-        )
+    )

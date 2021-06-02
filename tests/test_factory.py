@@ -67,7 +67,7 @@ def test_create_deploy_session_for_transfer(LIB):
         LIB.factory.create_session_for_transfer(
             amount = 1e9,
             correlation_id = random.randint(0, 124),
-            target_account = bytes([]),
+            target = bytes([]),
             ),
         LIB.types.DeployExecutable_Transfer
         )

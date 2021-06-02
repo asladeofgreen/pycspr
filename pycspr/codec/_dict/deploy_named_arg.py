@@ -5,10 +5,32 @@ from pycspr.types import CLType
 from pycspr.types import DeployExecutable
 from pycspr.types import DeployNamedArg
 
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+from pycspr.types.cl import CLType
+
 
 
 def _not_implemented(arg: DeployNamedArg):
     raise NotImplementedError("CL value type unencodeable")
+
+
+def _encode_byte_array(arg):
+    return {
+        "ByteArray": len(arg.value)
+        }
+
+
+def _encode_option(arg):
+    return {
+        "Option": _CL_TYPE_ENCODERS[arg.cl_type_info.innter]
+        }
 
 
 # Map: cl-type <-> encoder.
@@ -26,9 +48,9 @@ _CL_TYPE_ENCODERS = {
     CLType.STRING: _not_implemented,
     CLType.KEY: _not_implemented,
     CLType.UREF: _not_implemented,
-    CLType.OPTION: lambda arg: { "Option": _CL_TYPE_ENCODERS },
+    CLType.OPTION: _encode_option,
     CLType.LIST: _not_implemented,
-    CLType.BYTE_ARRAY: lambda arg: { "ByteArray": len(arg.bytes) },
+    CLType.BYTE_ARRAY: _encode_byte_array,
     CLType.RESULT: _not_implemented,
     CLType.MAP: _not_implemented,
     CLType.TUPLE_1: _not_implemented,
@@ -53,8 +75,8 @@ def to_json(arg: DeployNamedArg) -> bytearray:
         return [
             arg.name,
             {
-                "bytes": arg.value.bytes.hex(),
+                "bytes": bytes([]),
                 "cl_type": cl_type_encoder(arg),
-                "parsed": arg.value.parsed,
+                "parsed": str(arg.value),
             }
         ]
