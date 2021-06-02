@@ -48,35 +48,32 @@ def a_test_bytearray() -> bytes:
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_hash_tests_1(LIB) -> list:
-    """Returns a set of test hashes for use as input to upstream tests. 
-    
-    """
-    def _map_hash(hash_info: list) -> tuple:
-        algo, encoding, digest = hash_info
-        return LIB.crypto.HashAlgorithm[algo], \
-               LIB.crypto.HashEncoding[encoding], \
-               digest
-
-    def _map_fixture(fixture: list) -> list:
-        data, hash_set = fixture
-
-        return [data.encode("utf-8"), [_map_hash(i) for i in hash_set]]
-
-    return [_map_fixture(i) for i in _get_asset("fixtures_for_hash_tests.json", json.load)]
-
-
-@pytest.fixture(scope="session")
 def fixtures_for_hash_tests(LIB) -> list:
-    """Returns a set of test signatures for use as input to upstream tests. 
+    """Returns a set of fixtures for use as input to upstream hashing tests. 
     
     """
     return _get_asset("fixtures_for_hash_tests.json", json.load)["fixtures"]
 
 
 @pytest.fixture(scope="session")
+def fixtures_for_key_tests(LIB) -> list:
+    """Returns a set of fixtures for use as input to upstream key tests. 
+    
+    """
+    return _get_asset("fixtures_for_key_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_key_pair_tests(LIB) -> list:
+    """Returns a set of fixtures for use as input to upstream key-pair tests. 
+    
+    """
+    return _get_asset("fixtures_for_key_pair_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
 def fixtures_for_signature_tests(LIB) -> list:
-    """Returns a set of test signatures for use as input to upstream tests. 
+    """Returns a set of fixtures for use as input to upstream signature tests. 
     
     """
     return _get_asset("fixtures_for_signature_tests.json", json.load)["fixtures"]
@@ -88,28 +85,6 @@ def test_chain_id() -> str:
     
     """
     return "casper-net-1"
-
-
-@pytest.fixture(scope="session")
-def signature_data(LIB, a_test_bytearray) -> typing.Tuple[bytes, typing.Tuple]:
-    """Returns signature test data. 
-    
-    """    
-    return a_test_bytearray, \
-        (
-            "2fa788bfd72abbad5272e478e16dda3cf04f171f1368cca3a6517471475e42a1", \
-            LIB.crypto.KeyAlgorithm.ED25519,
-        ), \
-        (
-            (
-                LIB.crypto.SignatureEncoding.HEX, \
-                "1b351aea89b1f030349f317841daaf80aa5984d4bda1df908b6adaedeca8e02514182e10b53deabe0e41115a6ef689185b4633012edf9b3ae17859e9e8bdda0c",
-            ),
-            (
-                LIB.crypto.SignatureEncoding.BYTES, \
-                b'\x1b5\x1a\xea\x89\xb1\xf004\x9f1xA\xda\xaf\x80\xaaY\x84\xd4\xbd\xa1\xdf\x90\x8bj\xda\xed\xec\xa8\xe0%\x14\x18.\x10\xb5=\xea\xbe\x0eA\x11Zn\xf6\x89\x18[F3\x01.\xdf\x9b:\xe1xY\xe9\xe8\xbd\xda\x0c',
-            ),
-        )
 
 
 @pytest.fixture(scope="session")
@@ -132,45 +107,39 @@ def account_keys(LIB) -> typing.Tuple[typing.Tuple[pycspr.crypto.KeyAlgorithm, s
 
 
 @pytest.fixture(scope="session")
-def account_info(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
-    """Returns a test account key. 
-    
-    """
-    algo, pbk_hex, pvk_hex = account_keys[0]
-
-    return LIB.types.AccountKeyInfo(
-        pbk=bytes.fromhex(pbk_hex),
-        pvk=bytes.fromhex(pvk_hex),
-        algo=algo
-    )
-
-
-@pytest.fixture(scope="session")
-def account_info_ed25519(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
+def account_info_ed25519(LIB, account_keys, fixtures_for_key_tests) -> pycspr.types.AccountKeyInfo:
     """Returns a test ED25519 account key. 
     
     """
-    algo, pbk_hex, pvk_hex = account_keys[0]
+    fixture = fixtures_for_key_tests[0]
 
     return LIB.types.AccountKeyInfo(
-        pbk=bytes.fromhex(pbk_hex),
-        pvk=bytes.fromhex(pvk_hex),
-        algo=algo
+        pbk=bytes.fromhex(fixture["pbk"]),
+        pvk=bytes.fromhex(fixture["address"]),
+        algo=LIB.crypto.KeyAlgorithm[fixture["algo"]]
     )
 
 
 @pytest.fixture(scope="session")
-def account_info_secp256k1(LIB, account_keys) -> pycspr.types.AccountKeyInfo:
-    """Returns a test SECP256K1 account key. 
+def account_info_secp256k1(LIB, account_keys, fixtures_for_key_tests) -> pycspr.types.AccountKeyInfo:
+    """Returns a test ED25519 account key. 
     
     """
-    algo, pbk_hex, pvk_hex = account_keys[1]
+    fixture = fixtures_for_key_tests[1]
 
     return LIB.types.AccountKeyInfo(
-        pbk=bytes.fromhex(pbk_hex),
-        pvk=bytes.fromhex(pvk_hex),
-        algo=algo
+        pbk=bytes.fromhex(fixture["pbk"]),
+        pvk=bytes.fromhex(fixture["address"]),
+        algo=LIB.crypto.KeyAlgorithm[fixture["algo"]]
     )
+
+
+@pytest.fixture(scope="session")
+def account_info(LIB, account_info_ed25519) -> pycspr.types.AccountKeyInfo:
+    """Returns a test account key. 
+    
+    """
+    return account_info_ed25519
 
 
 @pytest.fixture(scope="session")
