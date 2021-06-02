@@ -17,16 +17,8 @@ def al_kindi() -> str:
 
 
 @pytest.fixture(scope="session")
-def bytes_to_hash(al_kindi) -> bytes:
-    """Returns some bytes to use as input to a hashing algo. 
-    
-    """
-    return  al_kindi.encode("utf-8")
-
-
-@pytest.fixture(scope="session")
-def bytes_to_sign(al_kindi) -> bytes:
-    """Returns some bytes to use as input to a signature algo. 
+def test_bytes(al_kindi) -> bytes:
+    """Returns some bytes to use as input to upstream tests. 
     
     """
     return  al_kindi.encode("utf-8")
@@ -52,11 +44,11 @@ def LIB() -> pycspr:
 
 
 @pytest.fixture(scope="session")
-def hash_data(LIB, bytes_to_hash) -> typing.Tuple[bytes, typing.Tuple]:
+def hash_data(LIB, test_bytes) -> typing.Tuple[bytes, typing.Tuple]:
     """Returns hashing test data. 
     
     """    
-    return bytes_to_hash, (
+    return test_bytes, (
         (
             LIB.crypto.HashAlgorithm.BLAKE2B, \
             LIB.crypto.HashEncoding.BYTES, \
@@ -71,11 +63,11 @@ def hash_data(LIB, bytes_to_hash) -> typing.Tuple[bytes, typing.Tuple]:
 
 
 @pytest.fixture(scope="session")
-def signature_data(LIB, bytes_to_sign) -> typing.Tuple[bytes, typing.Tuple]:
+def signature_data(LIB, test_bytes) -> typing.Tuple[bytes, typing.Tuple]:
     """Returns signature test data. 
     
     """    
-    return bytes_to_sign, \
+    return test_bytes, \
         (
             "2fa788bfd72abbad5272e478e16dda3cf04f171f1368cca3a6517471475e42a1", \
             LIB.crypto.KeyAlgorithm.ED25519,

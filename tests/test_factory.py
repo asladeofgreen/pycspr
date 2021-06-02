@@ -18,21 +18,21 @@ def test_create_deploy_named_arg(LIB, al_kindi):
 
 
 
-def test_create_deploy_approval_from_ed25519(LIB, account_info_ed25519, bytes_to_sign):
+def test_create_deploy_approval_from_ed25519(LIB, account_info_ed25519, test_bytes):
     assert isinstance(
         LIB.factory.create_deploy_approval(
             account_info_ed25519, 
-            bytes_to_sign
+            test_bytes
             ), 
         LIB.types.DeployApproval
         )
 
 
-def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, bytes_to_sign):
+def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, test_bytes):
     assert isinstance(
         LIB.factory.create_deploy_approval(
             account_info_secp256k1,
-            bytes_to_sign
+            test_bytes
             ), 
         LIB.types.DeployApproval
         )
