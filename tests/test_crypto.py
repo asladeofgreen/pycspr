@@ -14,8 +14,8 @@ def test_get_hash(LIB, fixtures_for_hash_tests):
             assert digest == LIB.crypto.get_hash(data, 32, algo, encoding)
 
 
-def test_get_account_key(LIB, fixtures_for_key_tests):
-    for fixture in fixtures_for_key_tests:
+def test_get_account_key(LIB, fixtures_for_public_key_tests):
+    for fixture in fixtures_for_public_key_tests:
         algo = LIB.crypto.KeyAlgorithm[fixture["algo"]]
         pbk_hex = fixture["pbk"]
         account_key = LIB.crypto.get_account_key(algo, pbk_hex)
@@ -23,15 +23,15 @@ def test_get_account_key(LIB, fixtures_for_key_tests):
         assert len(account_key) == len(pbk_hex) + 2
 
 
-def test_get_account_key_algo(LIB, fixtures_for_key_tests):
-    for fixture in fixtures_for_key_tests:
+def test_get_account_key_algo(LIB, fixtures_for_public_key_tests):
+    for fixture in fixtures_for_public_key_tests:
         algo = LIB.crypto.KeyAlgorithm[fixture["algo"]]
         account_key = LIB.crypto.get_account_key(algo, fixture["pbk"])
         assert LIB.crypto.get_account_key_algo(account_key) == algo
 
 
-def test_get_account_hash(LIB, fixtures_for_key_tests):
-    for fixture in fixtures_for_key_tests:
+def test_get_account_hash(LIB, fixtures_for_public_key_tests):
+    for fixture in fixtures_for_public_key_tests:
         algo = LIB.crypto.KeyAlgorithm[fixture["algo"]]
         account_key = LIB.crypto.get_account_key(algo, fixture["pbk"])
         assert LIB.crypto.get_account_hash(account_key) == fixture["address"]
