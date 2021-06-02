@@ -65,7 +65,7 @@ def get_pvk_from_pem_file(fpath: str) -> bytes:
     return len(pvk) % _PVK_LENGTH == 0 and pvk[:_PVK_LENGTH] or pvk[-_PVK_LENGTH:]
 
 
-def get_signature(pvk: bytes, data: bytes) -> bytes:
+def get_signature(data: bytes, pvk: bytes) -> bytes:
     """Returns an ED25519 digital signature of data signed from a PEM file representation of a private key.
     
     """
@@ -74,11 +74,11 @@ def get_signature(pvk: bytes, data: bytes) -> bytes:
     return sk.sign(data)
 
 
-def get_signature_from_pem_file(fpath: str, data: bytes) -> bytes:
+def get_signature_from_pem_file(data: bytes, fpath: str) -> bytes:
     """Returns an ED25519 digital signature of data signed from a PEM file representation of a private key.
     
     """
-    return get_signature(get_pvk_from_pem_file(fpath), data)
+    return get_signature(data, get_pvk_from_pem_file(fpath))
 
 
 def _get_key_pair(sk: ed25519.Ed25519PrivateKey) -> typing.Tuple[bytes, bytes]:

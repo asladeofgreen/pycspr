@@ -4,11 +4,10 @@ import secrets
 
 
 
-def test_get_hash(LIB, hash_data):
-    data, fixtures = hash_data
-    for algo, encoding, digest_expected in fixtures:
-        digest = LIB.crypto.get_hash(data, 32, algo, encoding)
-        assert digest == digest_expected
+def test_get_hash(LIB, fixtures_for_hash_tests):
+    for data, hash_info in fixtures_for_hash_tests:
+        for algo, encoding, digest in hash_info:
+            assert LIB.crypto.get_hash(data, 32, algo, encoding) == digest
 
 
 def test_get_account_key(LIB, account_keys):
@@ -75,9 +74,15 @@ def test_get_key_pair_from_seed(LIB, key_pair_specs):
         assert isinstance(pbk, typeof) and len(pbk) == pbk_length
 
 
-def test_get_signature(LIB, signature_data):
-    data, key_info, fixtures = signature_data
-    pvk_hex, algo = key_info
-    pvk = bytes.fromhex(pvk_hex)
-    for encoding, expected in fixtures:
-        assert LIB.crypto.get_signature(pvk, data, algo, encoding) == expected
+def test_get_signature(LIB, fixtures_for_signature_tests):
+    """Asserts that signature algorithms are being correctly executed.
+    
+    """
+    for fixture in fixtures_for_signature_tests:
+        data = fixture["data"].encode("utf-8")
+        key_algo = LIB.crypto.KeyAlgorithm[fixture["signingKey"]["algo"]]
+        key_pvk = bytes.fromhex(fixture["signingKey"]["pvk"])
+        for sig_info in fixture["signatures"]:
+            signature = sig_info["sig"]
+            encoding = LIB.crypto.SignatureEncoding[sig_info["encoding"]]
+            assert signature == LIB.crypto.get_signature(data, key_pvk, key_algo, encoding)

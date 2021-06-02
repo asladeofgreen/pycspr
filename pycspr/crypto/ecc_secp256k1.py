@@ -48,14 +48,14 @@ def get_pvk_pem_from_bytes(pvk: bytes) -> bytes:
     return sk.to_pem()
 
 
-def get_signature(pvk: bytes, data: bytes) -> bytes:
+def get_signature(data: bytes, pvk: bytes) -> bytes:
     """Returns an SECP256K1 digital signature of data signed from a PEM file representation of a private key.
     
     """
     return ecdsa.SigningKey.from_string(pvk, curve=CURVE).sign(data)
 
 
-def get_signature_from_pem_file(fpath: str, data: bytes) -> bytes:
+def get_signature_from_pem_file(data: bytes, fpath: str) -> bytes:
     """Returns an SECP256K1 digital signature of data signed from a PEM file representation of a private key.
     
     """

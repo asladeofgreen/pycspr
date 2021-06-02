@@ -31,4 +31,4 @@ class AccountKeyInfo:
         """Get signature over payload.
         
         """
-        return crypto.get_signature(self.pvk, data, self.algo)
+        return crypto.get_signature(data, self.pvk, self.algo)

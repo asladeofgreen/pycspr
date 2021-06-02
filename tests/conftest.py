@@ -1,3 +1,4 @@
+import json
 import os
 import pathlib
 import typing
@@ -7,29 +8,16 @@ import pytest
 import pycspr
 
 
+# Path to test assets.
+_ASSETS = pathlib.Path(os.path.dirname(__file__)) / "assets"
 
-@pytest.fixture(scope="session")
-def al_kindi() -> str:
-    """Returns name of an ancient cryptographer. 
+
+def _get_asset(fname: str, parser: typing.Callable = None):
+    """Returns contents of associated assets.
     
     """
-    return "أبو يوسف يعقوب بن إسحاق الصبّاح الكندي‎"
-
-
-@pytest.fixture(scope="session")
-def test_bytes(al_kindi) -> bytes:
-    """Returns some bytes to use as input to upstream tests. 
-    
-    """
-    return  al_kindi.encode("utf-8")
-
-
-@pytest.fixture(scope="session")
-def chain_name() -> str:
-    """Returns name of a test chain. 
-    
-    """
-    return "casper-net-1"
+    with open(_ASSETS / fname) as fhandle:
+        return fhandle.read() if parser is None else parser(fhandle)
 
 
 @pytest.fixture(scope="session")
@@ -44,30 +32,62 @@ def LIB() -> pycspr:
 
 
 @pytest.fixture(scope="session")
-def hash_data(LIB, test_bytes) -> typing.Tuple[bytes, typing.Tuple]:
-    """Returns hashing test data. 
+def a_test_string() -> str:
+    """Returns some bytes to use as input to upstream tests. 
     
-    """    
-    return test_bytes, (
-        (
-            LIB.crypto.HashAlgorithm.BLAKE2B, \
-            LIB.crypto.HashEncoding.BYTES, \
-            b'Dh.\xa8kpO\xb3\xc6\\\xd1o\x84\xa7kb\x1e\x04\xbb\xdb7F(\x0f%\xcf\x06" \xe4q\xb4',
-        ),
-        (
-            LIB.crypto.HashAlgorithm.BLAKE2B, \
-            LIB.crypto.HashEncoding.HEX, \
-            "44682ea86b704fb3c65cd16f84a76b621e04bbdb3746280f25cf062220e471b4"
-        ),
-    )
+    """
+    return  _get_asset("fixture_for_unicode_test.txt")
 
 
 @pytest.fixture(scope="session")
-def signature_data(LIB, test_bytes) -> typing.Tuple[bytes, typing.Tuple]:
+def a_test_bytearray() -> bytes:
+    """Returns some bytes to use as input to upstream tests. 
+    
+    """
+    return  _get_asset("fixture_for_unicode_test.txt").encode("utf-8")
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_hash_tests(LIB) -> list:
+    """Returns a set of test hashes for use as input to upstream tests. 
+    
+    """
+    def _map_hash(hash_info: list) -> tuple:
+        algo, encoding, digest = hash_info
+        return LIB.crypto.HashAlgorithm[algo], \
+               LIB.crypto.HashEncoding[encoding], \
+               digest
+
+    def _map_fixture(fixture: list) -> list:
+        data, hash_set = fixture
+
+        return [data.encode("utf-8"), [_map_hash(i) for i in hash_set]]
+
+    return [_map_fixture(i) for i in _get_asset("fixtures_for_hash_tests.json", json.load)]
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_signature_tests(LIB) -> list:
+    """Returns a set of test signatures for use as input to upstream tests. 
+    
+    """
+    return _get_asset("fixtures_for_signature_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
+def test_chain_id() -> str:
+    """Returns name of a test chain. 
+    
+    """
+    return "casper-net-1"
+
+
+@pytest.fixture(scope="session")
+def signature_data(LIB, a_test_bytearray) -> typing.Tuple[bytes, typing.Tuple]:
     """Returns signature test data. 
     
     """    
-    return test_bytes, \
+    return a_test_bytearray, \
         (
             "2fa788bfd72abbad5272e478e16dda3cf04f171f1368cca3a6517471475e42a1", \
             LIB.crypto.KeyAlgorithm.ED25519,

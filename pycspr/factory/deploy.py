@@ -116,5 +116,5 @@ def create_deploy_approval(
     """
     return DeployApproval(
         signer=account_key_info.pbk, 
-        signature=crypto.get_signature(account_key_info.pvk, data, algo=account_key_info.algo)
+        signature=crypto.get_signature(data, account_key_info.pvk, algo=account_key_info.algo)
         )

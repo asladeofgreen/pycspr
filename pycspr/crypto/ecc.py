@@ -154,15 +154,15 @@ _SIGNATURE_ENCODERS = {
 
 
 def get_signature(
-    pvk: bytes,
     data: bytes,
+    pvk: bytes,
     algo: KeyAlgorithm = KeyAlgorithm.ED25519,
     encoding: SignatureEncoding = SignatureEncoding.BYTES
     ) -> bytes:
     """Returns an ED25519 digital signature of data signed from a PEM file representation of a private key.
 
-    :param pvk: Secret key.
     :param data: Data to be signed.
+    :param pvk: Secret key.
     :param algo: Type of ECC algo used to generate secret key.
     :param encoding: Signature encoding type.
 
@@ -170,13 +170,13 @@ def get_signature(
     
     """
     return _SIGNATURE_ENCODERS[encoding](
-        ALGOS[algo].get_signature(pvk, data)
+        ALGOS[algo].get_signature(data, pvk)
         )
 
 
 def get_signature_from_pem_file(
-    fpath: str,
     data: bytes,
+    fpath: str,
     algo: KeyAlgorithm = KeyAlgorithm.ED25519,
     encoding: SignatureEncoding = SignatureEncoding.BYTES
     ) -> bytes:
@@ -185,4 +185,4 @@ def get_signature_from_pem_file(
     """
     pvk, _ = get_key_pair_from_pem_file(fpath, algo)
 
-    return get_signature(pvk, data, algo, encoding)
+    return get_signature(data, pvk, algo, encoding)
