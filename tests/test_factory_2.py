@@ -1,96 +1,84 @@
 import datetime
 import random
 
-# class CLType(enum.Enum):
-#     """Enumeration over set of CL types.
-    
-#     """
-
-#     OPTION = 13
-#     LIST = 14
-#     RESULT = 16
-#     MAP = 17
-#     TUPLE_1 = 18
-#     TUPLE_2 = 19
-#     TUPLE_3 = 20
-#     ANY = 21
 
 
-def test_create_named_arg_of_type_bool(FACTORY, TYPES, a_boolean):
-    _assert_named_arg_simple(FACTORY, TYPES, a_boolean, TYPES.CLType.BOOL)
+# def test_create_cl_value(LIB):
+#     assert isinstance(
+#         LIB.factory.create_cl_value(LIB.types.CLType.STRING, "a-string-cl-value"),
+#         LIB.types.CLValue
+#         )
 
 
-def test_create_named_arg_of_type_byte_array(FACTORY, TYPES, a_bytearray):
-    size = len(a_bytearray)
-    cl_type = FACTORY.cl_type.create_byte_array(size)
-    _assert_named_arg(FACTORY, TYPES, a_bytearray, cl_type)
-
-
-def test_create_named_arg_of_type_i32(LIB, FACTORY, TYPES, a_i32):
-    _assert_named_arg_simple(FACTORY, TYPES, a_i32, TYPES.CLType.I32)
-
-
-def test_create_named_arg_of_type_i64(LIB, FACTORY, TYPES, a_i64):
-    _assert_named_arg_simple(FACTORY, TYPES, a_i64, TYPES.CLType.I64)
-
-
-def test_create_named_arg_of_type_key(FACTORY, TYPES, a_key):
-    _assert_named_arg_simple(FACTORY, TYPES, a_key, TYPES.CLType.KEY)
-
-
-def test_create_named_arg_of_type_public_key(FACTORY, TYPES, a_public_key):
-    _assert_named_arg_simple(FACTORY, TYPES, a_public_key, TYPES.CLType.PUBLIC_KEY)
-
-
-def test_create_named_arg_of_type_string(FACTORY, TYPES, a_string):
-    _assert_named_arg_simple(FACTORY, TYPES, a_string, TYPES.CLType.STRING)
-
-
-def test_create_named_arg_of_type_u8(FACTORY, TYPES, a_u8):
-    _assert_named_arg_simple(FACTORY, TYPES, a_u8, TYPES.CLType.U8)
-
-
-def test_create_named_arg_of_type_u32(FACTORY, TYPES, a_u32):
-    _assert_named_arg_simple(FACTORY, TYPES, a_u32, TYPES.CLType.U32)
-
-
-def test_create_named_arg_of_type_u64(FACTORY, TYPES, a_u64):
-    _assert_named_arg_simple(FACTORY, TYPES, a_u64, TYPES.CLType.U64)
-
-
-def test_create_named_arg_of_type_u128(FACTORY, TYPES, a_u128):
-    _assert_named_arg_simple(FACTORY, TYPES, a_u128, TYPES.CLType.U128)
-
-
-def test_create_named_arg_of_type_u256(FACTORY, TYPES, a_u256):
-    _assert_named_arg_simple(FACTORY, TYPES, a_u256, TYPES.CLType.U256)
-
-
-def test_create_named_arg_of_type_unit(FACTORY, TYPES, a_unit):
-    _assert_named_arg_simple(FACTORY, TYPES, a_unit, TYPES.CLType.UNIT)
-
-
-def test_create_named_arg_of_type_uref(FACTORY, TYPES, a_uref):
-    _assert_named_arg_simple(FACTORY, TYPES, a_uref, TYPES.CLType.UREF)
-
-
-def _assert_named_arg(FACTORY, TYPES, value, cl_type):
-    arg_name = f"a-{cl_type.typeof.name.lower()}-arg"
-    arg = FACTORY.deploy.create_named_arg(arg_name, cl_type, value)
+def test_create_named_arg(LIB, FACTORY, TYPES, a_string):
+    arg = FACTORY.deploy.create_named_arg(
+        "a-string-arg",
+        TYPES.CLType.STRING,
+        a_string
+        )
     assert isinstance(arg, TYPES.DeployNamedArg)
 
 
-def _assert_named_arg_simple(FACTORY, TYPES, value, cl_typeof):
-    cl_type = FACTORY.cl_type.create_simple(cl_typeof)
-    _assert_named_arg(FACTORY, TYPES, value, cl_type)
+# def test_create_deploy_approval_from_ed25519(LIB, account_info_ed25519, a_bytearray):
+#     assert isinstance(
+#         LIB.factory.create_deploy_approval(
+#             account_info_ed25519, 
+#             a_bytearray
+#             ), 
+#         LIB.types.DeployApproval
+#         )
 
 
-def _assert_named_arg_option(FACTORY, TYPES, value, inner_cl_type):
-    cl_type = FACTORY.cl_type.create_option(inner_cl_type)
-    for value in [value, None]:
-        _assert_named_arg(FACTORY, TYPES, value, cl_type)   
+# def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, a_bytearray):
+#     assert isinstance(
+#         LIB.factory.create_deploy_approval(
+#             account_info_secp256k1,
+#             a_bytearray
+#             ), 
+#         LIB.types.DeployApproval
+#         )
 
 
-def test_create_named_arg_of_type_optional_bool(FACTORY, TYPES, a_boolean):
-    inner_cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.BOOL)
-    _assert_named_arg_option(FACTORY, TYPES, a_boolean, inner_cl_type)
+# def test_create_deploy_header_1(LIB, account_info, a_test_chain_id):
+#     assert isinstance(
+#         LIB.factory.create_deploy_header(
+#             account_key=account_info.account_key,
+#             body_hash=None,
+#             chain_name=a_test_chain_id,
+#             dependencies=[],
+#             timestamp=datetime.datetime.utcnow(),
+#             ttl="1day",
+#         ), 
+#         LIB.types.DeployHeader
+#         )
+
+
+# def test_create_deploy_header_2(LIB, account_info, a_test_chain_id):
+#     assert isinstance(
+#         LIB.factory.create_deploy_header(
+#             account_key=account_info.account_key,
+#             body_hash=None,
+#             chain_name=a_test_chain_id
+#         ), 
+#         LIB.types.DeployHeader
+#         )
+
+
+# def test_create_deploy_session_for_transfer(LIB):
+#     assert isinstance(
+#         LIB.factory.create_session_for_transfer(
+#             amount = 1e9,
+#             correlation_id = random.randint(0, 124),
+#             target = bytes([]),
+#             ),
+#         LIB.types.DeployExecutable_Transfer
+#         )
+
+
+# def test_create_deploy_payment_for_transfer(LIB):
+#     assert isinstance(
+#         LIB.factory.create_payment_for_transfer(
+#             amount = 1e5,
+#         ),
+#         LIB.types.DeployExecutable_ModuleBytes
+#         )

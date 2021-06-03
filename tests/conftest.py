@@ -103,6 +103,26 @@ def a_key(fixtures_for_public_key_tests) -> str:
 
 
 @pytest.fixture(scope="session")
+def a_list_of_integers() -> list:
+    """Returns a list of random integrers for upstream tests. 
+    
+    """    
+    return [random.randint(0, 1e3) for _ in range(10)]
+
+
+@pytest.fixture(scope="session")
+def a_map_of_string_to_integer() -> dict:
+    """Returns a map for upstream tests. 
+    
+    """    
+    return {
+        "a": 1,
+        "b": 2,
+        "c": 3,
+    }
+
+
+@pytest.fixture(scope="session")
 def a_public_key(fixtures_for_public_key_tests) -> str:
     """Returns a public key value for upstream tests. 
     
