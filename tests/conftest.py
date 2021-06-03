@@ -167,12 +167,19 @@ def LIB() -> pycspr:
 
 @pytest.fixture(scope="session")
 def FACTORY(LIB):
+    """Returns pointer to the library's type factory. 
+    
+    """    
     return LIB.factory
 
 
 @pytest.fixture(scope="session")
 def TYPES(LIB):
+    """Returns pointer to the library's typeset. 
+    
+    """  
     return LIB.types
+
 
 @pytest.fixture(scope="session")
 def account_info_ed25519(LIB, fixtures_for_public_key_tests) -> pycspr.types.AccountKeyInfo:
