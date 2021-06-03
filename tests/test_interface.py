@@ -94,13 +94,9 @@ _INTERFACE_OF_LIBRARY = {
 
 # Expected interface of factory methods.
 _INTERFACE_OF_FACTORY = {
-    _has_function: {
-        "create_cl_value",
-        "create_deploy_approval",
-        "create_deploy_header",
-        "create_deploy_named_arg",
-        "create_session_for_transfer",  
-        "create_payment_for_transfer",    
+    _has_member: {
+        "cl_type_info",
+        "deploy",
     },
 }
 

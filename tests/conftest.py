@@ -1,6 +1,7 @@
 import json
 import os
 import pathlib
+import random
 import typing
 
 import pytest
@@ -29,19 +30,91 @@ def a_test_chain_id() -> str:
 
 
 @pytest.fixture(scope="session")
-def a_test_string() -> str:
+def a_boolean_value() -> bool:
+    """Returns a boolean value for upstream tests. 
+    
+    """
+    return random.choice([True, False])
+
+
+@pytest.fixture(scope="session")
+def a_bytearray_value() -> bytes:
     """Returns some bytes to use as input to upstream tests. 
+    
+    """
+    return  _get_asset("fixture_for_unicode_test.txt").encode("utf-8")
+
+
+@pytest.fixture(scope="session")
+def a_i32_value() -> int:
+    """Returns an i32 value for upstream tests. 
+    
+    """
+    return random.randint(-(2 ** 31), (2 ** 31) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_i64_value() -> int:
+    """Returns an i64 value for upstream tests. 
+    
+    """
+    return random.randint(-(2 ** 63), (2 ** 63) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_string_value() -> str:
+    """Returns a string value for upstream tests. 
     
     """
     return  _get_asset("fixture_for_unicode_test.txt")
 
 
 @pytest.fixture(scope="session")
-def a_test_bytearray() -> bytes:
-    """Returns some bytes to use as input to upstream tests. 
+def a_u8_value() -> int:
+    """Returns an u8 value for upstream tests. 
     
     """
-    return  _get_asset("fixture_for_unicode_test.txt").encode("utf-8")
+    return random.randint(0, (2 ** 8) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_u32_value() -> int:
+    """Returns an u32 value for upstream tests. 
+    
+    """
+    return random.randint(0, (2 ** 32) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_u64_value() -> int:
+    """Returns an u64 value for upstream tests. 
+    
+    """
+    return random.randint(0, (2 ** 64) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_u128_value() -> int:
+    """Returns an u128 value for upstream tests. 
+    
+    """
+    return random.randint(0, (2 ** 128) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_u256_value() -> int:
+    """Returns an u256 value for upstream tests. 
+    
+    """
+    return random.randint(0, (2 ** 256) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_unit_value() -> type(None):
+    """Returns a unit value for upstream tests. 
+    
+    """
+    return None
 
 
 @pytest.fixture(scope="session")
@@ -91,6 +164,15 @@ def LIB() -> pycspr:
 
     return pycspr
 
+
+@pytest.fixture(scope="session")
+def FACTORY(LIB):
+    return LIB.factory
+
+
+@pytest.fixture(scope="session")
+def TYPES(LIB):
+    return LIB.types
 
 @pytest.fixture(scope="session")
 def account_info_ed25519(LIB, fixtures_for_public_key_tests) -> pycspr.types.AccountKeyInfo:

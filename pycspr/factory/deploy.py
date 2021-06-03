@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 import typing
 
 from pycspr import crypto
@@ -14,10 +14,7 @@ from pycspr.types.deploy import DeployExecutable_ModuleBytes
 from pycspr.types.deploy import DeployExecutable_Transfer
 from pycspr.types.deploy import DeployNamedArg
 
-from pycspr.factory.cl import create_type_info
-from pycspr.factory.cl import create_type_info_for_byte_array
-
-
+from pycspr.factory import cl_type_info
 
 
 def create_approval(
@@ -63,7 +60,7 @@ def create_header(
     body_hash: Digest,
     chain_name: str,
     dependencies: typing.List[Digest] = [],
-    timestamp: datetime = None,
+    timestamp: datetime.datetime = None,
     ttl: str = "1day"
     ) -> DeployHeader:
     """Returns header information associated with a deploy.
@@ -71,7 +68,7 @@ def create_header(
     """
     return DeployHeader(
         account=account_key,
-        timestamp=timestamp or datetime.utcnow(),
+        timestamp=timestamp or datetime.datetime.utcnow(),
         ttl=ttl,
         body_hash=body_hash,
         dependencies=dependencies,
@@ -87,6 +84,11 @@ def create_named_arg(
     """Returns a named argument associated with deploy execution information (session|payment).
     
     """
+    
+
+    type_info = CLTypeInfo(cl_type) if isinstance(cl_type, CLType) else cl_type
+    print(type_info)
+
     return DeployNamedArg(
         cl_type_info = CLTypeInfo(cl_type) if isinstance(cl_type, CLType) else cl_type,
         name = name,

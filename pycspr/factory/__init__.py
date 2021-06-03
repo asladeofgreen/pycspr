@@ -1,2 +1,3 @@
-from pycspr.factory.cl import * as cl
-from pycspr.factory.deploy import * as deploy
+import pycspr.factory.cl_type_info as cl_type_info
+import pycspr.factory.cl_type_info as cl_type
+import pycspr.factory.deploy as deploy

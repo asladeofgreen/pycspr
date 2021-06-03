@@ -11,19 +11,20 @@ from pycspr.types.cl import CLTypeInfoForTuple3
 
 
 
-def create_type_info_for_byte_array(size: int) -> CLTypeInfoForByteArray:
+def create_byte_array(size: int) -> CLTypeInfoForByteArray:
     """Returns CL type information for a byte array.
     
     :param int size: Size of byte array.
 
     """
+    print(888)
     return CLTypeInfoForByteArray(
         typeof=CLType.BYTE_ARRAY,
         size=size
     )
 
 
-def create_type_info_for_list(inner_type_info: CLTypeInfo) -> CLTypeInfoForList:
+def create_list(inner_type_info: CLTypeInfo) -> CLTypeInfoForList:
     """Returns CL type information for a list.
     
     :param CLTypeInfo inner_type_info: Type information pertaining to each element within list.
@@ -35,7 +36,7 @@ def create_type_info_for_list(inner_type_info: CLTypeInfo) -> CLTypeInfoForList:
     )
 
 
-def create_type_info_for_map(key_type_info: CLTypeInfo, value_type_info: CLTypeInfo) -> CLTypeInfoForMap:
+def create_map(key_type_info: CLTypeInfo, value_type_info: CLTypeInfo) -> CLTypeInfoForMap:
     """Returns CL type information for a map.
     
     :param CLTypeInfo key_type_info: Type information pertaining to each key within the map.
@@ -49,7 +50,7 @@ def create_type_info_for_map(key_type_info: CLTypeInfo, value_type_info: CLTypeI
     )
 
 
-def create_type_info_for_option(inner_type_info: CLTypeInfo):
+def create_option(inner_type_info: CLTypeInfo):
     """Returns CL type information for a byte array.
     
     :param CLTypeInfo inner_type_info: Type information pertaining to the optional value.
@@ -61,7 +62,7 @@ def create_type_info_for_option(inner_type_info: CLTypeInfo):
     )
 
 
-def create_type_info_for_simple(typeof: CLType) -> CLTypeInfoForSimple:
+def create_simple(typeof: CLType) -> CLTypeInfoForSimple:
     """Returns CL type information for a byte array.
     
     :param CLType typeof: Type of simple type being processed.
@@ -70,7 +71,7 @@ def create_type_info_for_simple(typeof: CLType) -> CLTypeInfoForSimple:
     return CLTypeInfoForSimple(typeof)
 
 
-def create_type_info_for_tuple_1(t0_type_info: CLTypeInfo):
+def create_tuple_1(t0_type_info: CLTypeInfo):
     """Returns CL type information for a byte array.
     
     :param CLTypeInfo t0_type_info: Type information pertaining to first tuple element.
@@ -82,7 +83,7 @@ def create_type_info_for_tuple_1(t0_type_info: CLTypeInfo):
     )
 
 
-def create_type_info_for_tuple_2(t0_type_info: CLTypeInfo, t1_type_info: CLTypeInfo):
+def create_tuple_2(t0_type_info: CLTypeInfo, t1_type_info: CLTypeInfo):
     """Returns CL type information for a byte array.
     
     :param CLTypeInfo t0_type_info: Type information pertaining to first tuple element.
@@ -96,7 +97,7 @@ def create_type_info_for_tuple_2(t0_type_info: CLTypeInfo, t1_type_info: CLTypeI
     )
 
 
-def create_type_info_for_tuple_3(t0_type_info: CLTypeInfo, t1_type_info: CLTypeInfo, t2_type_info: CLTypeInfo):
+def create_tuple_3(t0_type_info: CLTypeInfo, t1_type_info: CLTypeInfo, t2_type_info: CLTypeInfo):
     """Returns CL type information for a byte array.
     
     :param CLTypeInfo t0_type_info: Type information pertaining to first tuple element.

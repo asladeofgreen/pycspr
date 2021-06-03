@@ -15,7 +15,7 @@ class CLType(enum.Enum):
     U64 = 5
     U128 = 6
     U256 = 7
-    U512 = 8
+     
     UNIT = 9
     STRING = 10
     KEY = 11
