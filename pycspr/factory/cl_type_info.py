@@ -17,7 +17,6 @@ def create_byte_array(size: int) -> CLTypeInfoForByteArray:
     :param int size: Size of byte array.
 
     """
-    print(888)
     return CLTypeInfoForByteArray(
         typeof=CLType.BYTE_ARRAY,
         size=size

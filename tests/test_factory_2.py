@@ -6,20 +6,18 @@ import random
     
 #     """
 
-     
-#     UNIT = 9
 #     KEY = 11
 #     UREF = 12
+#     PUBLIC_KEY = 22
+
 #     OPTION = 13
 #     LIST = 14
-#     BYTE_ARRAY = 15
 #     RESULT = 16
 #     MAP = 17
 #     TUPLE_1 = 18
 #     TUPLE_2 = 19
 #     TUPLE_3 = 20
 #     ANY = 21
-#     PUBLIC_KEY = 22
 
 
 def test_create_named_arg_of_type_bool(FACTORY, TYPES, a_boolean_value):
@@ -62,22 +60,32 @@ def test_create_named_arg_of_type_i64(LIB, FACTORY, TYPES, a_i64_value):
     assert isinstance(arg, TYPES.DeployNamedArg)
 
 
+def test_create_named_arg_of_type_key(FACTORY, TYPES, a_key_value):
+    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.KEY)
+    arg = FACTORY.deploy.create_named_arg(
+        "a-key-arg",
+        cl_type,
+        a_key_value
+        )
+    assert isinstance(arg, TYPES.DeployNamedArg)
+
+
+def test_create_named_arg_of_type_public_key(FACTORY, TYPES, a_public_key_value):
+    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.PUBLIC_KEY)
+    arg = FACTORY.deploy.create_named_arg(
+        "a-public-key-arg",
+        cl_type,
+        a_public_key_value
+        )
+    assert isinstance(arg, TYPES.DeployNamedArg)
+
+
 def test_create_named_arg_of_type_string(FACTORY, TYPES, a_string_value):
     cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.STRING)
     arg = FACTORY.deploy.create_named_arg(
         "a-string-arg",
         cl_type,
         a_string_value
-        )
-    assert isinstance(arg, TYPES.DeployNamedArg)
-
-
-def test_create_named_arg_of_type_unit(FACTORY, TYPES, a_unit_value):
-    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.UNIT)
-    arg = FACTORY.deploy.create_named_arg(
-        "a-unit-arg",
-        cl_type,
-        a_unit_value
         )
     assert isinstance(arg, TYPES.DeployNamedArg)
 
@@ -131,3 +139,22 @@ def test_create_named_arg_of_type_u256(FACTORY, TYPES, a_u256_value):
         )
     assert isinstance(arg, TYPES.DeployNamedArg)
 
+
+def test_create_named_arg_of_type_unit(FACTORY, TYPES, a_unit_value):
+    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.UNIT)
+    arg = FACTORY.deploy.create_named_arg(
+        "a-unit-arg",
+        cl_type,
+        a_unit_value
+        )
+    assert isinstance(arg, TYPES.DeployNamedArg)
+
+
+def test_create_named_arg_of_type_uref(FACTORY, TYPES, a_uref_value):
+    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.UREF)
+    arg = FACTORY.deploy.create_named_arg(
+        "a-uref-arg",
+        cl_type,
+        a_uref_value
+        )
+    assert isinstance(arg, TYPES.DeployNamedArg)

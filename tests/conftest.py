@@ -22,6 +22,38 @@ def _get_asset(fname: str, parser: typing.Callable = None):
 
 
 @pytest.fixture(scope="session")
+def fixtures_for_hash_tests() -> list:
+    """Returns a set of fixtures for use as input to upstream hashing tests. 
+    
+    """
+    return _get_asset("fixtures_for_hash_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_public_key_tests() -> list:
+    """Returns a set of fixtures for use as input to upstream key tests. 
+    
+    """
+    return _get_asset("fixtures_for_public_key_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_key_pair_tests() -> list:
+    """Returns a set of fixtures for use as input to upstream key-pair tests. 
+    
+    """
+    return _get_asset("fixtures_for_key_pair_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_signature_tests() -> list:
+    """Returns a set of fixtures for use as input to upstream signature tests. 
+    
+    """
+    return _get_asset("fixtures_for_signature_tests.json", json.load)["fixtures"]
+
+
+@pytest.fixture(scope="session")
 def a_test_chain_id() -> str:
     """Returns name of a test chain. 
     
@@ -59,6 +91,24 @@ def a_i64_value() -> int:
     
     """
     return random.randint(-(2 ** 63), (2 ** 63) - 1)
+
+
+@pytest.fixture(scope="session")
+def a_key_value(fixtures_for_public_key_tests) -> str:
+    """Returns a key value for upstream tests. 
+    
+    """
+    fixture = fixtures_for_public_key_tests[0]
+    return fixture["address"]
+
+
+@pytest.fixture(scope="session")
+def a_public_key_value(fixtures_for_public_key_tests) -> str:
+    """Returns a public key value for upstream tests. 
+    
+    """
+    fixture = fixtures_for_public_key_tests[0]
+    return fixture["key"]
 
 
 @pytest.fixture(scope="session")
@@ -118,35 +168,11 @@ def a_unit_value() -> type(None):
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_hash_tests() -> list:
-    """Returns a set of fixtures for use as input to upstream hashing tests. 
+def a_uref_value() -> str:
+    """Returns a uref value for upstream tests. 
     
     """
-    return _get_asset("fixtures_for_hash_tests.json", json.load)["fixtures"]
-
-
-@pytest.fixture(scope="session")
-def fixtures_for_public_key_tests() -> list:
-    """Returns a set of fixtures for use as input to upstream key tests. 
-    
-    """
-    return _get_asset("fixtures_for_public_key_tests.json", json.load)["fixtures"]
-
-
-@pytest.fixture(scope="session")
-def fixtures_for_key_pair_tests() -> list:
-    """Returns a set of fixtures for use as input to upstream key-pair tests. 
-    
-    """
-    return _get_asset("fixtures_for_key_pair_tests.json", json.load)["fixtures"]
-
-
-@pytest.fixture(scope="session")
-def fixtures_for_signature_tests() -> list:
-    """Returns a set of fixtures for use as input to upstream signature tests. 
-    
-    """
-    return _get_asset("fixtures_for_signature_tests.json", json.load)["fixtures"]
+    return "uref-5d338c21a84c6ddcbea763c1db3c18383cc03d6088046540411bdcd12d7ac42e-007"
 
 
 @pytest.fixture(scope="session")
