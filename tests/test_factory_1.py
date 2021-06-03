@@ -10,11 +10,11 @@ import random
 #         )
 
 
-def test_create_named_arg(LIB, FACTORY, TYPES, a_string_value):
+def test_create_named_arg(LIB, FACTORY, TYPES, a_string):
     arg = FACTORY.deploy.create_named_arg(
         "a-string-arg",
         TYPES.CLType.STRING,
-        a_string_value
+        a_string
         )
     assert isinstance(arg, TYPES.DeployNamedArg)
 

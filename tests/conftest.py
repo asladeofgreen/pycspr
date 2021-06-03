@@ -94,7 +94,7 @@ def a_i64() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_key_value(fixtures_for_public_key_tests) -> str:
+def a_key(fixtures_for_public_key_tests) -> str:
     """Returns a key value for upstream tests. 
     
     """
@@ -103,7 +103,7 @@ def a_key_value(fixtures_for_public_key_tests) -> str:
 
 
 @pytest.fixture(scope="session")
-def a_public_key_value(fixtures_for_public_key_tests) -> str:
+def a_public_key(fixtures_for_public_key_tests) -> str:
     """Returns a public key value for upstream tests. 
     
     """
@@ -112,7 +112,7 @@ def a_public_key_value(fixtures_for_public_key_tests) -> str:
 
 
 @pytest.fixture(scope="session")
-def a_string_value() -> str:
+def a_string() -> str:
     """Returns a string value for upstream tests. 
     
     """
@@ -120,7 +120,7 @@ def a_string_value() -> str:
 
 
 @pytest.fixture(scope="session")
-def a_u8_value() -> int:
+def a_u8() -> int:
     """Returns an u8 value for upstream tests. 
     
     """
@@ -128,7 +128,7 @@ def a_u8_value() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_u32_value() -> int:
+def a_u32() -> int:
     """Returns an u32 value for upstream tests. 
     
     """
@@ -136,7 +136,7 @@ def a_u32_value() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_u64_value() -> int:
+def a_u64() -> int:
     """Returns an u64 value for upstream tests. 
     
     """
@@ -144,7 +144,7 @@ def a_u64_value() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_u128_value() -> int:
+def a_u128() -> int:
     """Returns an u128 value for upstream tests. 
     
     """
@@ -152,7 +152,7 @@ def a_u128_value() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_u256_value() -> int:
+def a_u256() -> int:
     """Returns an u256 value for upstream tests. 
     
     """
@@ -160,7 +160,7 @@ def a_u256_value() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_unit_value() -> type(None):
+def a_unit() -> type(None):
     """Returns a unit value for upstream tests. 
     
     """
@@ -168,7 +168,7 @@ def a_unit_value() -> type(None):
 
 
 @pytest.fixture(scope="session")
-def a_uref_value() -> str:
+def a_uref() -> str:
     """Returns a uref value for upstream tests. 
     
     """
