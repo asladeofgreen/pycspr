@@ -19,21 +19,21 @@ def test_create_named_arg(LIB, FACTORY, TYPES, a_string_value):
     assert isinstance(arg, TYPES.DeployNamedArg)
 
 
-# def test_create_deploy_approval_from_ed25519(LIB, account_info_ed25519, a_bytearray_value):
+# def test_create_deploy_approval_from_ed25519(LIB, account_info_ed25519, a_bytearray):
 #     assert isinstance(
 #         LIB.factory.create_deploy_approval(
 #             account_info_ed25519, 
-#             a_bytearray_value
+#             a_bytearray
 #             ), 
 #         LIB.types.DeployApproval
 #         )
 
 
-# def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, a_bytearray_value):
+# def test_create_deploy_approval_from_secp256k1(LIB, account_info_secp256k1, a_bytearray):
 #     assert isinstance(
 #         LIB.factory.create_deploy_approval(
 #             account_info_secp256k1,
-#             a_bytearray_value
+#             a_bytearray
 #             ), 
 #         LIB.types.DeployApproval
 #         )

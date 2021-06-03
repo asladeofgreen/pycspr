@@ -62,7 +62,7 @@ def a_test_chain_id() -> str:
 
 
 @pytest.fixture(scope="session")
-def a_boolean_value() -> bool:
+def a_boolean() -> bool:
     """Returns a boolean value for upstream tests. 
     
     """
@@ -70,7 +70,7 @@ def a_boolean_value() -> bool:
 
 
 @pytest.fixture(scope="session")
-def a_bytearray_value() -> bytes:
+def a_bytearray() -> bytes:
     """Returns some bytes to use as input to upstream tests. 
     
     """
@@ -78,7 +78,7 @@ def a_bytearray_value() -> bytes:
 
 
 @pytest.fixture(scope="session")
-def a_i32_value() -> int:
+def a_i32() -> int:
     """Returns an i32 value for upstream tests. 
     
     """
@@ -86,7 +86,7 @@ def a_i32_value() -> int:
 
 
 @pytest.fixture(scope="session")
-def a_i64_value() -> int:
+def a_i64() -> int:
     """Returns an i64 value for upstream tests. 
     
     """
