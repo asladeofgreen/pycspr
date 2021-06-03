@@ -63,18 +63,20 @@ def test_create_named_arg_of_type_i64(LIB, FACTORY, TYPES, a_i64_value):
 
 
 def test_create_named_arg_of_type_string(FACTORY, TYPES, a_string_value):
+    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.STRING)
     arg = FACTORY.deploy.create_named_arg(
         "a-string-arg",
-        TYPES.CLType.STRING,
+        cl_type,
         a_string_value
         )
     assert isinstance(arg, TYPES.DeployNamedArg)
 
 
 def test_create_named_arg_of_type_unit(FACTORY, TYPES, a_unit_value):
+    cl_type = FACTORY.cl_type.create_simple(TYPES.CLType.UNIT)
     arg = FACTORY.deploy.create_named_arg(
         "a-unit-arg",
-        TYPES.CLType.UNIT,
+        cl_type,
         a_unit_value
         )
     assert isinstance(arg, TYPES.DeployNamedArg)
