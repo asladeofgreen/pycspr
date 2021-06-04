@@ -10,15 +10,6 @@ import random
 #         )
 
 
-def test_create_named_arg(LIB, FACTORY, TYPES, a_string):
-    arg = FACTORY.deploy.create_named_arg(
-        "a-string-arg",
-        TYPES.CLType.STRING,
-        a_string
-        )
-    assert isinstance(arg, TYPES.DeployNamedArg)
-
-
 # def test_create_deploy_approval_from_ed25519(LIB, account_info_ed25519, a_bytearray):
 #     assert isinstance(
 #         LIB.factory.create_deploy_approval(

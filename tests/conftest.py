@@ -52,7 +52,7 @@ def fixtures_for_hash_tests() -> list:
     """Returns a set of fixtures for use as input to upstream hashing tests. 
     
     """
-    return _get_fixture("for_hash_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_hash_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
@@ -60,7 +60,7 @@ def fixtures_for_public_key_tests() -> list:
     """Returns a set of fixtures for use as input to upstream key tests. 
     
     """
-    return _get_fixture("for_public_key_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_public_key_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
@@ -68,7 +68,7 @@ def fixtures_for_key_pair_tests() -> list:
     """Returns a set of fixtures for use as input to upstream key-pair tests. 
     
     """
-    return _get_fixture("for_key_pair_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_key_pair_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
@@ -76,7 +76,7 @@ def fixtures_for_signature_tests() -> list:
     """Returns a set of fixtures for use as input to upstream signature tests. 
     
     """
-    return _get_fixture("for_signature_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_signature_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
@@ -85,140 +85,6 @@ def a_test_chain_id() -> str:
     
     """
     return "casper-net-1"
-
-
-@pytest.fixture(scope="session")
-def a_boolean(vectors_1) -> bool:
-    """Returns a boolean value for upstream tests. 
-    
-    """
-    return vectors_1.get_value("BOOL")
-
-
-@pytest.fixture(scope="session")
-def a_bytearray(vectors_1) -> bytes:
-    """Returns some bytes to use as input to upstream tests. 
-    
-    """
-    return bytes.fromhex(vectors_1.get_value("BYTE_ARRAY"))
-
-
-@pytest.fixture(scope="session")
-def a_i32(vectors_1) -> int:
-    """Returns an i32 value for upstream tests. 
-    
-    """
-    return vectors_1.get_value("I32")
-
-
-@pytest.fixture(scope="session")
-def a_i64(vectors_1) -> int:
-    """Returns an i64 value for upstream tests. 
-    
-    """
-    return vectors_1.get_value("I64")
-
-
-@pytest.fixture(scope="session")
-def a_key(fixtures_for_public_key_tests) -> str:
-    """Returns a key value for upstream tests. 
-    
-    """
-    fixture = fixtures_for_public_key_tests[0]
-    return fixture["address"]
-
-
-@pytest.fixture(scope="session")
-def a_list_of_integers() -> list:
-    """Returns a list of random integrers for upstream tests. 
-    
-    """    
-    return [random.randint(0, 1e3) for _ in range(10)]
-
-
-@pytest.fixture(scope="session")
-def a_map_of_string_to_integer() -> dict:
-    """Returns a map for upstream tests. 
-    
-    """    
-    return {
-        "a": 1,
-        "b": 2,
-        "c": 3,
-    }
-
-
-@pytest.fixture(scope="session")
-def a_public_key(fixtures_for_public_key_tests) -> str:
-    """Returns a public key value for upstream tests. 
-    
-    """
-    fixture = fixtures_for_public_key_tests[0]
-    return fixture["key"]
-
-
-@pytest.fixture(scope="session")
-def a_string() -> str:
-    """Returns a string value for upstream tests. 
-    
-    """
-    return  _get_fixture("for_unicode_test.txt")
-
-
-@pytest.fixture(scope="session")
-def a_u8() -> int:
-    """Returns an u8 value for upstream tests. 
-    
-    """
-    return random.randint(0, (2 ** 8) - 1)
-
-
-@pytest.fixture(scope="session")
-def a_u32() -> int:
-    """Returns an u32 value for upstream tests. 
-    
-    """
-    return random.randint(0, (2 ** 32) - 1)
-
-
-@pytest.fixture(scope="session")
-def a_u64() -> int:
-    """Returns an u64 value for upstream tests. 
-    
-    """
-    return random.randint(0, (2 ** 64) - 1)
-
-
-@pytest.fixture(scope="session")
-def a_u128() -> int:
-    """Returns an u128 value for upstream tests. 
-    
-    """
-    return random.randint(0, (2 ** 128) - 1)
-
-
-@pytest.fixture(scope="session")
-def a_u256() -> int:
-    """Returns an u256 value for upstream tests. 
-    
-    """
-    return random.randint(0, (2 ** 256) - 1)
-
-
-@pytest.fixture(scope="session")
-def a_unit() -> type(None):
-    """Returns a unit value for upstream tests. 
-    
-    """
-    return None
-
-
-@pytest.fixture(scope="session")
-def a_uref() -> str:
-    """Returns a uref value for upstream tests. 
-    
-    """
-    return "uref-5d338c21a84c6ddcbea763c1db3c18383cc03d6088046540411bdcd12d7ac42e-007"
 
 
 @pytest.fixture(scope="session")
