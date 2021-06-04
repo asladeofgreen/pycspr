@@ -15,7 +15,6 @@ class CLType(enum.Enum):
     U64 = 5
     U128 = 6
     U256 = 7
-     
     UNIT = 9
     STRING = 10
     KEY = 11
@@ -30,6 +29,24 @@ class CLType(enum.Enum):
     TUPLE_3 = 20
     ANY = 21
     PUBLIC_KEY = 22
+
+
+# Set of types considered to be simple.
+CL_TYPES_SIMPLE = {
+    CLType.BOOL,
+    CLType.I32,
+    CLType.I64,
+    CLType.KEY,
+    CLType.PUBLIC_KEY,
+    CLType.STRING,
+    CLType.U8,
+    CLType.U32,
+    CLType.U64,
+    CLType.U128,
+    CLType.U256,
+    CLType.UNIT,
+    CLType.UREF,
+}
             
                 
 @dataclasses.dataclass

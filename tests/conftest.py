@@ -9,16 +9,42 @@ import pytest
 import pycspr
 
 
-# Path to test assets.
-_ASSETS = pathlib.Path(os.path.dirname(__file__)) / "assets"
+# Path to test fixtures.
+_FIXTURES = pathlib.Path(os.path.dirname(__file__)) / "fixtures"
+
+class VectorSet1_Accessor():
+    def __init__(self):
+        self.fixture = _get_fixture("for_data_tests.json", json.load)
+    
+
+    def get_vectors(self, typeof: str) -> list:
+        typeof = typeof if isinstance(typeof, str) else typeof.name
+        return [i for i in self.fixture if i["typeof"] == typeof.upper()]
+
+    def get_vector(self, typeof: str) -> dict:
+        return self.get_vectors(typeof)[0]
+
+    def get_value(self, typeof: str) -> object:
+        return self.get_vector(typeof)["value"]
+
+    def get_value_as_bytes(self, typeof: str) -> bytes:
+        return bytes.fromhex(self.get_value(typeof))
 
 
-def _get_asset(fname: str, parser: typing.Callable = None):
-    """Returns contents of associated assets.
+def _get_fixture(fname: str, parser: typing.Callable = None):
+    """Returns contents of associated fixtures.
     
     """
-    with open(_ASSETS / fname) as fhandle:
+    with open(_FIXTURES / fname) as fhandle:
         return fhandle.read() if parser is None else parser(fhandle)
+
+
+@pytest.fixture(scope="session")
+def vectors_1() -> list:
+    """Returns a set of fixtures for use as input to upstream data tests. 
+    
+    """
+    return VectorSet1_Accessor()
 
 
 @pytest.fixture(scope="session")
@@ -26,7 +52,7 @@ def fixtures_for_hash_tests() -> list:
     """Returns a set of fixtures for use as input to upstream hashing tests. 
     
     """
-    return _get_asset("fixtures_for_hash_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_hash_tests.json", json.load)["fixtures"]
 
 
 @pytest.fixture(scope="session")
@@ -34,7 +60,7 @@ def fixtures_for_public_key_tests() -> list:
     """Returns a set of fixtures for use as input to upstream key tests. 
     
     """
-    return _get_asset("fixtures_for_public_key_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_public_key_tests.json", json.load)["fixtures"]
 
 
 @pytest.fixture(scope="session")
@@ -42,7 +68,7 @@ def fixtures_for_key_pair_tests() -> list:
     """Returns a set of fixtures for use as input to upstream key-pair tests. 
     
     """
-    return _get_asset("fixtures_for_key_pair_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_key_pair_tests.json", json.load)["fixtures"]
 
 
 @pytest.fixture(scope="session")
@@ -50,7 +76,7 @@ def fixtures_for_signature_tests() -> list:
     """Returns a set of fixtures for use as input to upstream signature tests. 
     
     """
-    return _get_asset("fixtures_for_signature_tests.json", json.load)["fixtures"]
+    return _get_fixture("for_signature_tests.json", json.load)["fixtures"]
 
 
 @pytest.fixture(scope="session")
@@ -62,35 +88,35 @@ def a_test_chain_id() -> str:
 
 
 @pytest.fixture(scope="session")
-def a_boolean() -> bool:
+def a_boolean(vectors_1) -> bool:
     """Returns a boolean value for upstream tests. 
     
     """
-    return random.choice([True, False])
+    return vectors_1.get_value("BOOL")
 
 
 @pytest.fixture(scope="session")
-def a_bytearray() -> bytes:
+def a_bytearray(vectors_1) -> bytes:
     """Returns some bytes to use as input to upstream tests. 
     
     """
-    return  _get_asset("fixture_for_unicode_test.txt").encode("utf-8")
+    return bytes.fromhex(vectors_1.get_value("BYTE_ARRAY"))
 
 
 @pytest.fixture(scope="session")
-def a_i32() -> int:
+def a_i32(vectors_1) -> int:
     """Returns an i32 value for upstream tests. 
     
     """
-    return random.randint(-(2 ** 31), (2 ** 31) - 1)
+    return vectors_1.get_value("I32")
 
 
 @pytest.fixture(scope="session")
-def a_i64() -> int:
+def a_i64(vectors_1) -> int:
     """Returns an i64 value for upstream tests. 
     
     """
-    return random.randint(-(2 ** 63), (2 ** 63) - 1)
+    return vectors_1.get_value("I64")
 
 
 @pytest.fixture(scope="session")
@@ -136,7 +162,7 @@ def a_string() -> str:
     """Returns a string value for upstream tests. 
     
     """
-    return  _get_asset("fixture_for_unicode_test.txt")
+    return  _get_fixture("for_unicode_test.txt")
 
 
 @pytest.fixture(scope="session")
