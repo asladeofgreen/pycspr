@@ -76,11 +76,11 @@ def test_create_named_arg_tuple_3(FACTORY, TYPES, vectors_1):
 def _assert_arg(FACTORY, TYPES, value, cl_type):
     # Assert named arg can be instantiated.
     arg_name = f"a-{cl_type.typeof.name.lower()}-arg"
-    arg = FACTORY.deploy.create_named_arg(arg_name, cl_type, value)
+    arg = FACTORY.deploys.create_named_arg(arg_name, cl_type, value)
     assert isinstance(arg, TYPES.DeployNamedArg)
 
     # Assert optional named arg can be instantiated.
     cl_type = FACTORY.cl_type.create_option(cl_type)
     for value in [value, None]:
-        arg = FACTORY.deploy.create_named_arg(f"{arg_name}-optional", cl_type, value)
+        arg = FACTORY.deploys.create_named_arg(f"{arg_name}-optional", cl_type, value)
         assert isinstance(arg, TYPES.DeployNamedArg)

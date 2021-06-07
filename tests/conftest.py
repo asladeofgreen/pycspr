@@ -1,4 +1,5 @@
 import json
+import operator
 import os
 import pathlib
 import random
@@ -9,14 +10,25 @@ import pytest
 import pycspr
 
 
-# Path to test fixtures.
-_FIXTURES = pathlib.Path(os.path.dirname(__file__)) / "fixtures"
+# Path to test vectors.
+_VECTORS = pathlib.Path(os.path.dirname(__file__)) / "vectors"
+
+
+def _get_vector(fname: str, parser: typing.Callable = None):
+    """Returns contents of a test vector.
+    
+    """
+    with open(_VECTORS / fname) as fhandle:
+        return fhandle.read() if parser is None else parser(fhandle)
+        
 
 class VectorSet1_Accessor():
-    def __init__(self):
-        self.fixture = _get_fixture("for_data_tests.json", json.load)
+    """Vector 1 access simplifier.
     
-
+    """
+    def __init__(self):
+        self.fixture = _get_vector("for_data_tests.json", json.load)
+    
     def get_vectors(self, typeof: str) -> list:
         typeof = typeof if isinstance(typeof, str) else typeof.name
         return [i for i in self.fixture if i["typeof"] == typeof.upper()]
@@ -31,14 +43,6 @@ class VectorSet1_Accessor():
         return bytes.fromhex(self.get_value(typeof))
 
 
-def _get_fixture(fname: str, parser: typing.Callable = None):
-    """Returns contents of associated fixtures.
-    
-    """
-    with open(_FIXTURES / fname) as fhandle:
-        return fhandle.read() if parser is None else parser(fhandle)
-
-
 @pytest.fixture(scope="session")
 def vectors_1() -> list:
     """Returns a set of fixtures for use as input to upstream data tests. 
@@ -48,19 +52,19 @@ def vectors_1() -> list:
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_hash_tests() -> list:
+def vectors_2() -> list:
     """Returns a set of fixtures for use as input to upstream hashing tests. 
     
     """
-    return _get_fixture("for_hash_tests.json", json.load)
+    return _get_vector("for_hash_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_key_pair_tests() -> list:
+def vectors_3() -> list:
     """Returns a set of fixtures for use as input to upstream key-pair tests. 
     
     """
-    return _get_fixture("for_key_pair_tests.json", json.load)
+    return _get_vector("for_key_pair_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
@@ -68,23 +72,15 @@ def fixtures_for_public_key_tests() -> list:
     """Returns a set of fixtures for use as input to upstream key tests. 
     
     """
-    return _get_fixture("for_public_key_tests.json", json.load)
+    return _get_vector("for_public_key_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_signature_tests() -> list:
+def vectors_4() -> list:
     """Returns a set of fixtures for use as input to upstream signature tests. 
     
     """
-    return _get_fixture("for_signature_tests.json", json.load)
-
-
-@pytest.fixture(scope="session")
-def a_test_chain_id() -> str:
-    """Returns name of a test chain. 
-    
-    """
-    return "casper-net-1"
+    return _get_vector("for_signature_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
@@ -120,39 +116,21 @@ def TYPES(LIB):
 
 
 @pytest.fixture(scope="session")
-def account_info_ed25519(LIB, fixtures_for_public_key_tests) -> pycspr.types.AccountKeyInfo:
-    """Returns a test ED25519 account key. 
-    
-    """
-    fixture = fixtures_for_public_key_tests[0]
-
-    return LIB.types.AccountKeyInfo(
-        pbk=bytes.fromhex(fixture["pbk"]),
-        pvk=bytes.fromhex(fixture["address"]),
-        algo=LIB.crypto.KeyAlgorithm[fixture["algo"]]
-    )
-
-
-@pytest.fixture(scope="session")
-def account_info_secp256k1(LIB, fixtures_for_public_key_tests) -> pycspr.types.AccountKeyInfo:
-    """Returns a test ED25519 account key. 
-    
-    """
-    fixture = fixtures_for_public_key_tests[1]
-
-    return LIB.types.AccountKeyInfo(
-        pbk=bytes.fromhex(fixture["pbk"]),
-        pvk=bytes.fromhex(fixture["address"]),
-        algo=LIB.crypto.KeyAlgorithm[fixture["algo"]]
-    )
-
-
-@pytest.fixture(scope="session")
-def account_info(LIB, account_info_ed25519) -> pycspr.types.AccountKeyInfo:
+def a_test_account(FACTORY, vectors_3) -> pycspr.types.AccountKeyInfo:
     """Returns a test account key. 
     
     """
-    return account_info_ed25519
+    algo, pbk, pvk = operator.itemgetter("algo", "pbk", "pvk")(vectors_3[0])
+    
+    return FACTORY.accounts.create_account_info(pbk, pvk, algo)
+
+
+@pytest.fixture(scope="session")
+def a_test_chain_id() -> str:
+    """Returns name of a test chain. 
+    
+    """
+    return "casper-net-1"
 
 
 def _get_account_info_of_nctl_user(LIB, user_id: int) -> pycspr.types.AccountKeyInfo:

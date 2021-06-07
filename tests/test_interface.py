@@ -101,6 +101,7 @@ _INTERFACE_OF_LIBRARY = {
 # Expected interface of factory methods.
 _INTERFACE_OF_FACTORY = {
     _has_member: {
+        "accounts",
         "cl_type_info",
         "deploy",
     },

@@ -1,40 +1,24 @@
 import base64
 import pathlib
 import secrets
+import operator
+from operator import itemgetter
 
 
-
-def test_get_hash(LIB, fixtures_for_hash_tests):
-    for fixture in fixtures_for_hash_tests:
-        data = fixture["data"].encode("utf-8")
-        for hash_info in fixture["hashes"]:
-            algo = LIB.crypto.HashAlgorithm[hash_info["algo"]]
-            encoding = LIB.crypto.HashEncoding[hash_info["encoding"]]
-            digest = hash_info["digest"]
-            assert digest == LIB.crypto.get_hash(data, 32, algo, encoding)
+def test_get_hash(LIB, vectors_2):
+    for data, hashes in [operator.itemgetter("data", "hashes")(i) for i in vectors_2]:
+        for algo, encoding, digest in [operator.itemgetter("algo", "encoding", "digest")(j) for j in hashes]:
+            algo = LIB.crypto.HashAlgorithm[algo]
+            encoding = LIB.crypto.HashEncoding[encoding]
+            assert digest == LIB.crypto.get_hash(data.encode("utf-8"), 32, algo, encoding)
 
 
-def test_get_account_key(LIB, fixtures_for_public_key_tests):
-    for fixture in fixtures_for_public_key_tests:
-        algo = LIB.crypto.KeyAlgorithm[fixture["algo"]]
-        pbk_hex = fixture["pbk"]
-        account_key = LIB.crypto.get_account_key(algo, pbk_hex)
-        assert isinstance(account_key, str)
-        assert len(account_key) == len(pbk_hex) + 2
-
-
-def test_get_account_key_algo(LIB, fixtures_for_public_key_tests):
-    for fixture in fixtures_for_public_key_tests:
-        algo = LIB.crypto.KeyAlgorithm[fixture["algo"]]
-        account_key = LIB.crypto.get_account_key(algo, fixture["pbk"])
-        assert LIB.crypto.get_account_key_algo(account_key) == algo
-
-
-def test_get_account_hash(LIB, fixtures_for_public_key_tests):
-    for fixture in fixtures_for_public_key_tests:
-        algo = LIB.crypto.KeyAlgorithm[fixture["algo"]]
-        account_key = LIB.crypto.get_account_key(algo, fixture["pbk"])
-        assert LIB.crypto.get_account_hash(account_key) == fixture["address"]
+def test_get_account(LIB, vectors_3):
+    for algo, pbk, account_key, accountHash in [operator.itemgetter("algo", "pbk", "accountKey", "accountHash")(i) for i in vectors_3]:
+        algo = LIB.crypto.KeyAlgorithm[algo]
+        assert algo == LIB.crypto.get_account_key_algo(account_key)
+        assert account_key == LIB.crypto.get_account_key(algo, pbk)
+        assert LIB.crypto.get_account_hash(account_key) == accountHash
 
 
 def test_get_key_pair_1(LIB, key_pair_specs):
@@ -94,11 +78,11 @@ def test_get_key_pair_5(LIB, key_pair_specs):
         assert isinstance(pbk, typeof) and len(pbk) == pbk_length
 
 
-def test_get_public_key_from_private_key_1(LIB, fixtures_for_key_pair_tests):
+def test_get_public_key_from_private_key_1(LIB, vectors_3):
     """Asserts that a public key can be derived from a private key encoded as a byte array.
     
     """
-    for fixture in fixtures_for_key_pair_tests:
+    for fixture in vectors_3:
         _, pbk = LIB.crypto.get_key_pair_from_bytes(
             bytes.fromhex(fixture["pvk"]),
             LIB.crypto.KeyAlgorithm[fixture["algo"]],
@@ -107,11 +91,11 @@ def test_get_public_key_from_private_key_1(LIB, fixtures_for_key_pair_tests):
         assert fixture["pbk"] == pbk
 
 
-def test_get_public_key_from_private_key_2(LIB, fixtures_for_key_pair_tests):
+def test_get_public_key_from_private_key_2(LIB, vectors_3):
     """Asserts that a public key can be derived from a private key encoded as base64.
     
     """
-    for fixture in fixtures_for_key_pair_tests:
+    for fixture in vectors_3:
         _, pbk = LIB.crypto.get_key_pair_from_base64(
             base64.b64encode(bytes.fromhex(fixture["pvk"])),
             LIB.crypto.KeyAlgorithm[fixture["algo"]],
@@ -120,11 +104,11 @@ def test_get_public_key_from_private_key_2(LIB, fixtures_for_key_pair_tests):
         assert fixture["pbk"] == pbk
 
 
-def test_get_public_key_from_private_key_3(LIB, fixtures_for_key_pair_tests):
+def test_get_public_key_from_private_key_3(LIB, vectors_3):
     """Asserts that a public key can be derived from a private key encoded as hexadecimal.
     
     """
-    for fixture in fixtures_for_key_pair_tests:
+    for fixture in vectors_3:
         _, pbk = LIB.crypto.get_key_pair_from_hex_string(
             fixture["pvk"],
             LIB.crypto.KeyAlgorithm[fixture["algo"]],
@@ -133,11 +117,11 @@ def test_get_public_key_from_private_key_3(LIB, fixtures_for_key_pair_tests):
         assert fixture["pbk"] == pbk
 
 
-def test_get_signature(LIB, fixtures_for_signature_tests):
+def test_get_signature(LIB, vectors_4):
     """Asserts that signature algorithms are being correctly executed.
     
     """
-    for fixture in fixtures_for_signature_tests:
+    for fixture in vectors_4:
         data = fixture["data"].encode("utf-8")
         key_algo = LIB.crypto.KeyAlgorithm[fixture["signingKey"]["algo"]]
         key_pvk = bytes.fromhex(fixture["signingKey"]["pvk"])
