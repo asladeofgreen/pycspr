@@ -56,19 +56,19 @@ def fixtures_for_hash_tests() -> list:
 
 
 @pytest.fixture(scope="session")
-def fixtures_for_public_key_tests() -> list:
-    """Returns a set of fixtures for use as input to upstream key tests. 
-    
-    """
-    return _get_fixture("for_public_key_tests.json", json.load)
-
-
-@pytest.fixture(scope="session")
 def fixtures_for_key_pair_tests() -> list:
     """Returns a set of fixtures for use as input to upstream key-pair tests. 
     
     """
     return _get_fixture("for_key_pair_tests.json", json.load)
+
+
+@pytest.fixture(scope="session")
+def fixtures_for_public_key_tests() -> list:
+    """Returns a set of fixtures for use as input to upstream key tests. 
+    
+    """
+    return _get_fixture("for_public_key_tests.json", json.load)
 
 
 @pytest.fixture(scope="session")
