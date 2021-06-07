@@ -6,7 +6,7 @@ def test_exec_transfer(LIB, a_test_chain_id, cp1, cp2):
     # Raw parameters.
     correlation_id = random.randint(0, 124)
     payment_amount = 1000
-    target_address = cp2.account_address
+    target_address = cp2.address
     transfer_amount = 2500000000
 
     # Construct deploy 

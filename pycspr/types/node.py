@@ -45,6 +45,21 @@ class NodeConnectionInfo:
         return self.host
 
 
+@dataclasses.dataclass
+class NodeDispatchInfo:
+    """Encapsulates information required to dispatch to a node.
+    
+    """
+    # Information required to connect to a node.
+    connection: NodeConnectionInfo
+
+    # Identifier of chain which dispatch is targetting.
+    chain_id: str = "casper-net-1"
+
+    # Maximum time interval before which dispatch processing will be cancelled.
+    ttl: str = "1day"
+
+
 class NodeEventType(enum.Enum):
     """Enumeration over set of exposed node event types.
     
@@ -80,5 +95,6 @@ NODE_RPC_ENDPOINTS: set = {
 
 # Set of SSE endpoints.
 NODE_SSE_ENDPOINTS: set = {
-    "events",
+    "main",
+    "sigs"
 }

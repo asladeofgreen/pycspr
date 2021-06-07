@@ -56,7 +56,7 @@ def create_deploy(approvals, header, payment, session):
 
 
 def create_header(
-    account_key: bytes,
+    account_key_info: AccountKeyInfo,
     body_hash: Digest,
     chain_name: str,
     dependencies: typing.List[Digest] = [],
@@ -67,7 +67,7 @@ def create_header(
     
     """
     return DeployHeader(
-        account=account_key,
+        account=account_key_info.account_key,
         timestamp=timestamp or datetime.datetime.utcnow(),
         ttl=ttl,
         body_hash=body_hash,
@@ -84,8 +84,6 @@ def create_named_arg(
     """Returns a named argument associated with deploy execution information (session|payment).
     
     """
-    
-
     type_info = CLTypeInfo(cl_type) if isinstance(cl_type, CLType) else cl_type
     print(type_info)
 
@@ -109,17 +107,29 @@ def create_payment_for_transfer(amount: int = 10000) -> DeployExecutable_ModuleB
 
 
 def create_session_for_transfer(
-    amount: int, 
-    target: bytes, 
-    correlation_id: int, 
+    amount: int,
+    target: bytes,
+    correlation_id: int,
     ) -> DeployExecutable_Transfer:
     """Returns session execution info for a native transfer.
     
     """
     return DeployExecutable_Transfer(
         args=[
-            create_named_arg("amount", amount,         CLType.U512),
-            create_named_arg("target", target,         CLType.PUBLIC_KEY),
-            create_named_arg("id",     correlation_id, CLType.U64),            
+            create_named_arg(
+                "amount",
+                amount,
+                CLType.U512
+                ),
+            create_named_arg(
+                "target",
+                target,
+                CLType.PUBLIC_KEY
+                ),
+            create_named_arg(
+                "id",
+                correlation_id,
+                CLType.U64
+                ),
         ]
     )

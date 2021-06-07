@@ -40,7 +40,7 @@ class AccountKeyInfo:
 
 
     @property
-    def account_address(self):
+    def address(self):
         """Returns on-chain account address.
 
         """ 

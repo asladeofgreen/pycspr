@@ -73,13 +73,17 @@ _INTERFACE_OF_LIBRARY = {
     _has_function: {
         "decode",
         "encode",
+        "get_account_address",
         "get_account_balance",
         "get_account_hash",
         "get_account_info",
+        "get_account_info_by_account_hash",
         "get_account_key",
         "get_account_main_purse_uref",
         "get_auction_info",
         "get_block",
+        "get_block_transfers",
+        "get_deploy",
         "get_era_info",
         "get_events",
         "get_node_metrics",
@@ -87,10 +91,12 @@ _INTERFACE_OF_LIBRARY = {
         "get_node_status",
         "get_rpc_endpoint",
         "get_rpc_schema",
+        "get_state_item",
         "get_state_root_hash",
         "get_switch_block",        
     },
 }
+
 
 # Expected interface of factory methods.
 _INTERFACE_OF_FACTORY = {
@@ -102,7 +108,7 @@ _INTERFACE_OF_FACTORY = {
 
 
 def test_version_of_library(LIB):
-    assert LIB.__version__ == "0.2.0"
+    assert LIB.__version__ == "0.3.0"
 
 
 def test_exports_of_library(LIB):
